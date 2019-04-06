@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import logo from './img/logo.png'
-import './UserLogin.css';
+import './DriverLogin.css';
 
 class UserLogin extends Component {
   render() {
     return (
       <div className="Login">
           <div className="Login-Container">
-            <img src={logo} alt="Logo"/>
+            <img src={logo}/>
             <label for="username">Usuario</label>
 
             <input type="text" placeholder=" Ingresar usuario"/>
@@ -15,7 +15,7 @@ class UserLogin extends Component {
             <input type="submit" value="Iniciar Sesión"/>
             
             <p className="Login-NewUser" for="newUser">¿Nuevo Usuario? 
-              <a href="/user-signup" > Registrate aquí</a> 
+              <a href="/driver-signup" > Registrate aquí</a> 
             </p>   
           </div>
         </div>

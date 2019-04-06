@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './UserSignUp.css'
+import './DriverSignUp.css'
 import logo from './img/logo.png'
 
 class UserSignUp extends Component {
@@ -7,7 +7,7 @@ class UserSignUp extends Component {
         return(
             <div className="SignUp">
                 <div className="SignUp-Container">
-                    <img src={logo} alt="Logo"/>
+                    <img src={logo}/>
                     <label for="userSign">Registrarse</label>
                     <input type="text" placeholder=" Nombre"/>
                     <input type="text" placeholder=" Número de celular"/>
