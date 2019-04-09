@@ -2,15 +2,6 @@
 var db = require('../db');
 
 const Database = {
-  /* CREATE TABLE taxi
-(
-    plate VARCHAR(7) PRIMARY KEY,
-    model VARCHAR(20) NOT NULL,
-    year INT,
-    soat VARCHAR(50) NOT NULL,
-    trunk BOOLEAN NOT NULL,
-    brand varchar(20) NOT NULL
-);; */
   async create(req, res) {
     const text = `INSERT INTO
       taxi(plate, model, soat, trunk, brand)
@@ -24,15 +15,11 @@ const Database = {
       "brand"
     ];
 
-    console.log("try")
     try {
-      db.pool.connect()
+      //db.pool.connect()
       const { rows } = await db.db.query(text, values);
-      console.log("hola")
       return res.status(201).send(rows[0]);
     } catch(error) {
-      console.log("mundo")
-      console.log(error)
       return res.status(400).send(error);
     }
   },
