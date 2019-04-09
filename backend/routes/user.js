@@ -1,50 +1,39 @@
-var createUser = function(req, res) {
+module.exports.createUser = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var getUser = function(req, res) {
+module.exports.getUser = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var updateUser = function(req, res) {
+module.exports.updateUser = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var getUserUnpaidTrips = function(req, res) {
+module.exports.getUserUnpaidTrips = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var payUserTrips = function(req, res) {
+module.exports.payUserTrips = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var getNearbyDrivers = function(req, res) {
+module.exports.getNearbyDrivers = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var requestUserTrip = function(req, res) {
+module.exports.requestUserTrip = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var getUserPlaces = function(req, res) {
+module.exports.getUserPlaces = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var addUserPlace = function(req, res) {
+module.exports.addUserPlace = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
 
-var deleteUserPlace = function(req, res) {
+module.exports.deleteUserPlace = (req, res) => {
     return res.status(200).send("Requested info of the user /${req.params.userId}");
 }
-
-module.exports = createUser;
-module.exports = getUser;
-module.exports = updateUser;
-module.exports = getUserUnpaidTrips;
-module.exports = payUserTrips;
-module.exports = getNearbyDrivers;
-module.exports = requestUserTrip;
-module.exports = getUserPlaces;
-module.exports = addUserPlace;
-module.exports = deleteUserPlace;

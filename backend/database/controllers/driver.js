@@ -1,42 +1,43 @@
-import moment from 'moment';
-import uuidv4 from 'uuid/v4';
-import db from '../db';
 
-const Reflection = {
-  /**
-   * Create A Reflection
-   * @param {object} req 
-   * @param {object} res
-   * @returns {object} reflection object 
-   */
+var db = require('../db');
+
+const Database = {
+  /* CREATE TABLE taxi
+(
+    plate VARCHAR(7) PRIMARY KEY,
+    model VARCHAR(20) NOT NULL,
+    year INT,
+    soat VARCHAR(50) NOT NULL,
+    trunk BOOLEAN NOT NULL,
+    brand varchar(20) NOT NULL
+);; */
   async create(req, res) {
     const text = `INSERT INTO
-      reflections(id, success, low_point, take_away, created_date, modified_date)
-      VALUES($1, $2, $3, $4, $5, $6)
+      taxi(plate, model, soat, trunk, brand)
+      VALUES($1, $2, $3, $4, $5)
       returning *`;
     const values = [
-      uuidv4(),
-      req.body.success,
-      req.body.low_point,
-      req.body.take_away,
-      moment(new Date()),
-      moment(new Date())
+      "asdsa",
+      "asdsadad",
+      "soat",
+      true,
+      "brand"
     ];
 
+    console.log("try")
     try {
-      const { rows } = await db.query(text, values);
+      db.pool.connect()
+      const { rows } = await db.db.query(text, values);
+      console.log("hola")
       return res.status(201).send(rows[0]);
     } catch(error) {
+      console.log("mundo")
+      console.log(error)
       return res.status(400).send(error);
     }
   },
-  /**
-   * Get All Reflection
-   * @param {object} req 
-   * @param {object} res 
-   * @returns {object} reflections array
-   */
-  async getAll(req, res) {
+
+  /* async getAll(req, res) {
     const findAllQuery = 'SELECT * FROM reflections';
     try {
       const { rows, rowCount } = await db.query(findAllQuery);
@@ -45,12 +46,7 @@ const Reflection = {
       return res.status(400).send(error);
     }
   },
-  /**
-   * Get A Reflection
-   * @param {object} req 
-   * @param {object} res
-   * @returns {object} reflection object
-   */
+
   async getOne(req, res) {
     const text = 'SELECT * FROM reflections WHERE id = $1';
     try {
@@ -63,12 +59,7 @@ const Reflection = {
       return res.status(400).send(error)
     }
   },
-  /**
-   * Update A Reflection
-   * @param {object} req 
-   * @param {object} res 
-   * @returns {object} updated reflection
-   */
+
   async update(req, res) {
     const findOneQuery = 'SELECT * FROM reflections WHERE id=$1';
     const updateOneQuery =`UPDATE reflections
@@ -92,12 +83,7 @@ const Reflection = {
       return res.status(400).send(err);
     }
   },
-  /**
-   * Delete A Reflection
-   * @param {object} req 
-   * @param {object} res 
-   * @returns {void} return statuc code 204 
-   */
+
   async delete(req, res) {
     const deleteQuery = 'DELETE FROM reflections WHERE id=$1 returning *';
     try {
@@ -109,7 +95,7 @@ const Reflection = {
     } catch(error) {
       return res.status(400).send(error);
     }
-  }
+  } */
 }
 
-export default Reflection;
+module.exports.Database  = Database;
