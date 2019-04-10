@@ -41,14 +41,18 @@ class Map extends React.Component {
 
   addNewMarker = (destiny_lat, destiny_lng) => {
     const currentMarkers = this.state.markers;
-    var newMarker = [destiny_lat, destiny_lng];
+    var newMarker = { lat: destiny_lat, lng: destiny_lng };
     currentMarkers.push(newMarker);
     this.setState({ markers: currentMarkers });
   };
 
   handleAddMarker = event => {
     event.preventDefault();
-    console.log(event.target.origin_lat.value);
+    var lat = parseInt(event.target.destiny_lat.value, 10);
+    var lng = parseInt(event.target.destiny_lng.value, 10);
+    console.log(lat);
+    console.log(lng);
+    this.addNewMarker(lat, lng);
   };
 
   render() {
@@ -63,6 +67,7 @@ class Map extends React.Component {
           mapElement={<div style={{ height: `100%` }} />}
           lat={this.state.userLocation.lat}
           lng={this.state.userLocation.lng}
+          markers={this.state.markers}
         />
         <form onSubmit={this.handleAddMarker}>
           <GridContainer>
@@ -128,7 +133,12 @@ const CustomMap = withScriptjs(
       }}
     >
       <Marker position={{ lat: props.lat, lng: props.lng }} icon={MyLocation} />
-      <Marker position={{ lat: 3.4372201, lng: -76.5224991 }} />
+      {props.markers.map((marker, id) => (
+        <Marker
+          key={`marker-${id}`}
+          position={{ lat: marker.lat, lng: marker.lng }}
+        />
+      ))}
     </GoogleMap>
   ))
 );
