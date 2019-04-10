@@ -8,7 +8,7 @@ module.exports.createClient = (req, res) => {
 }
 
 module.exports.getClient = (req, res) => {
-    return client.Database.get(req, res)
+    return client.Database.login(req, res)
 }
 
 module.exports.updateClient = (req, res) => {

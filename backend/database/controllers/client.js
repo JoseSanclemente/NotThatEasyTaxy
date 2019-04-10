@@ -2,6 +2,7 @@ var db = require('../db')
 
 const Database = {
   async create(req, res) {
+    const loginQuery = 'INSERT INTO client_login(client_id, password)'
     const query = `INSERT INTO
           client(client_id, name, credit_card)
           VALUES($1, $2, $3)
@@ -10,6 +11,7 @@ const Database = {
 
     try {
       const { rows } = await db.db.query(query, values)
+      await db.db.query(loginQuery, [req.params.clientID, req.body.password])
       return res.status(200).json({
         client_id: rows[0].client_id,
         name: rows[0].name
@@ -72,6 +74,22 @@ const Database = {
         client_id: rows[0].client_id,
         name: rows[0].name
       })
+    } catch (error) {
+      return res.status(400).json({ error: error })
+    }
+  },
+
+  async login(req, res) {
+    const query = `SELECT * FROM client_login
+                    WHERE client_id = $1 AND password=$2;`
+    const values = [req.params.clientID, req.body.password]
+
+    try {
+      const { rows } = await db.db.query(query, values)
+      if (!rows[0]) {
+        return res.status(400).json({ error: "not found" })
+      }
+      return res.status(200).json({ message: "ok" })
     } catch (error) {
       return res.status(400).json({ error: error })
     }

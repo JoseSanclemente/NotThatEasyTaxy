@@ -8,7 +8,7 @@ module.exports.createDriver = (req, res) => {
 }
 
 module.exports.getDriver = (req, res) => {
-    return driver.Database.get(req, res)
+    return driver.Database.login(req, res)
 }
 
 module.exports.updateDriver = (req, res) => {
