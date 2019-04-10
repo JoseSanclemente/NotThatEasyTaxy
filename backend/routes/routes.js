@@ -1,5 +1,5 @@
 const driver = require("./driver.js")
-const vehicle = require("./vehicle.js")
+const vehicle = require("./taxi.js")
 const user = require("./user.js")
 
 var appRouter = function (app) {
@@ -12,9 +12,9 @@ var appRouter = function (app) {
     app.get("/api/driver/:driverID/getTrips", driver.getDriverUnpaidTrips);
     app.post("/api/driver/:driverID/chargeTrips", driver.payDriverTrips);
 
-    app.post("/api/vehicle/:vehicleID", vehicle.createVehicle);
-    app.get("/api/vehicle/:vehicleID", vehicle.getVehicle);
-    app.put("/api/vehicle/:vehicleID", vehicle.updateVehicle);
+    app.post("/api/taxi/:taxiID", vehicle.createTaxi);
+    app.get("/api/taxi/:taxiID", vehicle.getTaxi);
+    app.put("/api/taxi/:taxiID", vehicle.updateTaxi);
 
     app.post("/api/user/:userID", user.createUser);
     app.get("/api/user/:userID", user.getUser);
@@ -27,5 +27,5 @@ var appRouter = function (app) {
     app.post("/api/user/:userID/addPlace", user.addUserPlace);
     app.delete("/api/user/:userID/removePlace", user.deleteUserPlace);
 }
-  
+
 module.exports = appRouter;
