@@ -17,6 +17,7 @@ const favIcon = L.icon({
   popupAnchor: [0, -15]
 });
 
+
 class MapComponent extends Component {
   state = {
     userLocation: {
@@ -58,41 +59,54 @@ class MapComponent extends Component {
   }
 
   addMarker = (e) => {
-    const currentMarkers = this.state.favLocations
-    console.log(currentMarkers);
-    var newMarker = {position: e.latlng, name: "Second Marker"}
-    currentMarkers.push(newMarker)
+    const currentMarkers = this.state.favLocations;
+    var newMarker = {position: e.latlng, name: "Second Marker"};
+    currentMarkers.push(newMarker);
     this.setState(
       {
         favLocations: currentMarkers
       }
     )
   }
+  
+  showPopup = (event) => {
+    console.log("clicked")
+  };
+  
+  handleClick = (e) => {
+    this.showPopup();
+    this.addMarker(e);
+  }
+
  
   render(){    
     const userPosition = [this.state.userLocation.lat, this.state.userLocation.lng]
     const userMessage = this.state.userLocation.popupMessagesposition
-    return (
-      <Map className="Map" center={userPosition} zoom={this.state.zoom}
-        onClick={this.addMarker}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-          
-        <Marker position={userPosition} icon={userIcon}>
-          <Popup>
-            <span>{userMessage}</span>
-          </Popup>
-        </Marker>
 
-        {this.state.favLocations.map((fav,id) => 
-          <Marker key={`marker-${id}`} position={fav.position} icon={favIcon}>
-          <Popup>
-            <span>{fav.name}</span>
-          </Popup>
+    return (
+      <div>
+          <Map className="Map" center={userPosition} zoom={this.state.zoom}
+          onClick={this.handleClick}>
+          <TileLayer
+            attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+            
+          <Marker position={userPosition} icon={userIcon}>
+            <Popup>
+              <span>{userMessage}</span>
+            </Popup>
           </Marker>
-        )}
-      </Map>
+
+          {this.state.favLocations.map((fav,id) => 
+            <Marker key={`marker-${id}`} position={fav.position} icon={favIcon}>
+            <Popup>
+              <span>{fav.name}</span>
+            </Popup>
+            </Marker>
+          )}
+        </Map>
+      </div>
+
     )
   }
 }
