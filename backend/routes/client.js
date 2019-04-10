@@ -1,5 +1,6 @@
 const client = require("../database/controllers/client.js")
 const place = require("../database/controllers/place.js")
+const actives = require("../database/controllers/active_driver.js")
 const availableTrips = require("../database/controllers/available_trips.js")
 const trip = require("../database/controllers/trip.js")
 

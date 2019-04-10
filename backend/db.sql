@@ -69,7 +69,7 @@ CREATE TABLE available_trips
 
 CREATE TABLE trip
 (
-    trip_id VARCHAR(20) PRIMARY KEY,
+    trip_id VARCHAR(36) PRIMARY KEY,
     driver_id VARCHAR(10) REFERENCES driver(driver_id),
     client_id VARCHAR(12) REFERENCES client(client_id),
     orig_pos_lat FLOAT NOT NULL,

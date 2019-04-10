@@ -2,7 +2,7 @@ var db = require('../db')
 
 const Database = {
   async create(req, res) {
-    const loginQuery = 'INSERT INTO client_login(client_id, password)'
+    const loginQuery = 'INSERT INTO client_login(client_id, password) VALUES($1, $2)'
     const query = `INSERT INTO
           client(client_id, name, credit_card)
           VALUES($1, $2, $3)
@@ -17,32 +17,36 @@ const Database = {
         name: rows[0].name
       })
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ error: error })
     }
   },
 
   async update(req, res) {
-    const getQuery = `SELECT * FROM client WHERE client_id = $1;`
+    const getQuery = `SELECT * FROM client WHERE client_id=$1;`
     const query = `UPDATE client
-                    SET name = $1, credit_card = $2
-                    WHERE client_id = $3 returning *`
+                    SET name=$1, credit_card=$2
+                    WHERE client_id=$3 returning *`
 
     try {
-      const { rows } = await db.db.query(getQuery, [req.params.taxiID]);
+      const { rows } = await db.db.query(getQuery, [req.params.clientID]);
       if(!rows[0]) {
         return res.status(404).json({error: 'client not found'});
       }
+
       const values = [
         req.body.name || rows[0].name,
         req.body.credit_card || rows[0].credit_card,
         req.params.clientID
       ];
-      const { rows } = await db.db.query(query, values)
+      const response = await db.db.query(query, values)
+
       return res.status(200).json({
-        client_id: rows[0].client_id,
-        name: rows[0].name
+        client_id: response.rows[0].client_id,
+        name: response.rows[0].name
       })
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ error: error})
     }
   },
@@ -59,6 +63,7 @@ const Database = {
         name: rows[0].name
       })
     } catch (error) {
+      console.log(error)
       return res.status(400).json({error: error})
     }
   },
@@ -75,6 +80,7 @@ const Database = {
         name: rows[0].name
       })
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ error: error })
     }
   },
@@ -91,7 +97,10 @@ const Database = {
       }
       return res.status(200).json({ message: "ok" })
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ error: error })
     }
   }
 }
+
+module.exports.Database  = Database;

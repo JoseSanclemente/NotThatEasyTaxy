@@ -4,10 +4,9 @@ const Database = {
   async create(req, res) {
     const text = `INSERT INTO
       taxi(taxi_id, model, year, soat, trunk, brand)
-      VALUES($1, $2, $3, $4, $5, $6)
-      returning *`;
+      VALUES($1, $2, $3, $4, $5, $6) returning *`;
     const values = [
-      req.params.taxi_id,
+      req.params.taxiID,
       req.body.model,
       req.body.year,
       req.body.soat,
@@ -17,7 +16,7 @@ const Database = {
 
     try {
       const { rows } = await db.db.query(text, values);
-      return res.status(201).json({
+      return res.status(200).json({
         taxi_id: rows[0].taxi_id,
         model: rows[0].model,
         year: rows[0].year,
@@ -26,7 +25,8 @@ const Database = {
         brand: rows[0].brand
       });
     } catch(error) {
-      return res.status(400).send(error);
+      console.log(error)
+      return res.status(400).json({ error: error });
     }
   },
 
@@ -78,9 +78,9 @@ const Database = {
         trunk: rows[0].trunk,
         brand: rows[0].brand
       });
-    } catch(err) {
+    } catch(error) {
       console.log(error)
-      return res.status(400).send(err);
+      return res.status(400).json(error);
     }
   }
 }
