@@ -13,7 +13,7 @@ CREATE TABLE driver
 (
     -- driver's cedula
     driver_id VARCHAR(10) PRIMARY KEY,
-    plate VARCHAR(7) REFERENCES taxi(plate),
+    taxi_id VARCHAR(7) REFERENCES taxi(taxi_id),
     name varchar(60) NOT NULL,
     birth_date DATE NOT NULL
 );
@@ -21,10 +21,10 @@ CREATE TABLE driver
 CREATE TABLE active_driver
 (
     driver_id VARCHAR(10) REFERENCES driver(driver_id),
-    taxi_id VARCHAR(7) REFERENCES taxi(plate),
+    taxi_id VARCHAR(7) REFERENCES taxi(taxi_id),
     pos_lat FLOAT NOT NULL,
 	pos_long FLOAT NOT NULL,
-    PRIMARY KEY (driver_id, plate)
+    PRIMARY KEY (driver_id, taxi_id)
 );
 
 CREATE TABLE available_trips
