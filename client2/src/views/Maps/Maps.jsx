@@ -48,8 +48,8 @@ class Map extends React.Component {
 
   handleAddMarker = event => {
     event.preventDefault();
-    var lat = parseInt(event.target.destiny_lat.value, 10);
-    var lng = parseInt(event.target.destiny_lng.value, 10);
+    var lat = parseFloat(event.target.destiny_lat.value, 10);
+    var lng = parseFloat(event.target.destiny_lng.value, 10);
     console.log(lat);
     console.log(lng);
     this.addNewMarker(lat, lng);
@@ -111,8 +111,8 @@ class Map extends React.Component {
               />
             </GridItem>
             <GridItem>
-              <Button color="success" type="submit">
-                Hacer Viaje
+              <Button color="info" type="submit">
+                Agregar Lugar
               </Button>
             </GridItem>
           </GridContainer>
