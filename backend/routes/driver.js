@@ -23,7 +23,7 @@ module.exports.changeDriverStatus = (req, res) => {
 }
 
 module.exports.getDriverPendingTrips = (req, res) => {
-    return availableTrips.Database.getDriverTips(req, res)
+    return availableTrips.Database.getDriverTrips(req, res)
 }
 
 module.exports.acceptDriverTrip = (req, res) => {

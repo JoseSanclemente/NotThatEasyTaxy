@@ -4,18 +4,24 @@ const uuidv4 = require('uuid/v4');
 const Database = {
   async create(req, res) {
     const query = `INSERT INTO
-                    available_trip(client_id, driver_id, orig_pos_lat, orig_pos_long, dest_pos_lat, dest_pos_long)
-                    VALUES($1, $2, $3, $4, $5, $6)
+                    trip(trip_id, driver_id, client_id, orig_pos_lat, orig_pos_long, dest_pos_lat, dest_pos_long, date, charged, paid_out)
+                    VALUES($1, $2, $3, $4, $5, $6, $7, to_timestamp($8), FALSE, FALSE)
                     returning *`
     const values = [
         uuidv4(),
         req.params.driverID,
-        req.body.driver_id
+        req.body.client_id,
+        req.body.orig_pos_lat,
+        req.body.orig_pos_long,
+        req.body.dest_pos_lat,
+        req.body.dest_pos_long,
+        Date.now() / 1000.0
     ]
 
     try {
-        const { rows } = await db.db.query(query, values)
-        return res.status(200).send({
+        const  response  = await db.db.query(query, values)
+        const rows = response.rows
+        return res.status(200).json({
             trip_id: rows[0].trip_id,
             driver_id: rows[0].driver_id,
             client_id: rows[0].client_id,
@@ -29,31 +35,32 @@ const Database = {
             paid_out: rows[0].paid_out
         })
     } catch (error) {
-        return res.status(400).send({ error: error })
+      console.log(error)
+      return res.status(400).json({ error: error })
     }
   },
 
   async getUnpaid(req, res) {
-    const query = ``
-    const values = []
+    var query = ``
+    var values = []
 
     if (req.params.driverID != undefined) {
-        query = `DELETE FROM trip
-        WHERE driver_id = $1 AND paid_out = FALSE;`
+        query = `SELECT * FROM trip
+        WHERE driver_id = $1 AND paid_out = FALSE AND charged = TRUE;`
         values.push(req.params.driverID)
     }
 
     if (req.params.clientID != undefined) {
-        query = `DELETE FROM trip
+        query = `SELECT * FROM trip
         WHERE client_id = $1 AND charged = FALSE;`
         values.push(req.params.clientID)
     }
     
     try {
         const { rows } = await db.db.query(query, values)
-        
+
         var trips = []
-        rows.array.forEach(trip => {
+        rows.forEach(trip => {
             trips.push({
                 trip_id: trip.trip_id,
                 driver_id: trip.driver_id,
@@ -71,12 +78,13 @@ const Database = {
 
       return res.status(200).json(trips)
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ error: error })
     }
   },
 
   async pay(req, res) {
-    const query = ``
+    var query = ``
 
     if (req.params.driverID != undefined) {
         query = `UPDATE trip SET paid_out=TRUE WHERE trip_id=$1`
@@ -91,7 +99,7 @@ const Database = {
 
         req.body.trips.forEach(async trip => {
             const { rows } = await db.db.query(query, [trip])
-            rows.array.forEach(trip => {
+            rows.forEach(trip => {
                 trips.push({
                     trip_id: trip.trip_id,
                     driver_id: trip.driver_id,
@@ -110,7 +118,10 @@ const Database = {
 
       return res.status(200).json(trips)
     } catch (error) {
+      console.log(error)
       return res.status(400).json({ error: error })
     }
   }
 }
+
+module.exports.Database  = Database;

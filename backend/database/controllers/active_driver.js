@@ -3,25 +3,26 @@ var db = require('../db');
 const Database = {
   async create(req, res) {
     const text = `INSERT INTO
-    active_driver(driver_id, plate, pos_lat, pos_long)
+    active_driver(driver_id, taxi_id, pos_lat, pos_long)
       VALUES($1, $2, $3, $4)
       returning *`;
     const values = [
       req.params.driverID,
-      req.body.plate,
-      req.body.posLat,
-      req.body.posLong
+      req.body.taxi_id,
+      req.body.pos_lat,
+      req.body.pos_long
     ];
 
     try {
       const { rows } = await db.db.query(text, values);
       return res.status(201).send({
         driver_id: rows[0].driver_id,
-        plate: rows[0].plate,
+        taxi_id: rows[0].taxi_id,
         pos_lat: rows[0].pos_lat,
         pos_long: rows[0].pos_long
       });
     } catch(error) {
+      console.log(error)
       return res.status(400).json({error: error});
     }
   },
@@ -35,7 +36,7 @@ const Database = {
       }
       return res.status(200).json({
         driver_id: rows[0].driver_id,
-        plate: rows[0].plate,
+        taxi_id: rows[0].taxi_id,
         pos_lat: rows[0].pos_lat,
         pos_long: rows[0].pos_long
       });
@@ -67,26 +68,20 @@ const Database = {
   },
 
   async delete(req, res) {
-    const query = 'DELETE FROM driver WHERE driver_id=$1 returning *';
+    const query = 'DELETE FROM active_driver WHERE driver_id=$1 returning *';
     try {
-      const { rows } = await db.db.query(findOneQuery, [req.params.taxiID]);
-      if(!rows[0]) {
-        return res.status(404).json({error: 'taxi not found'});
+      const { rows } = await db.db.query(query, [req.params.driverID]);
+      if (!rows[0]) {
+        return res.status(404).json({ message: 'driver not active' });
       }
-      const values = [
-        req.body.plate || rows[0].plate,
-        req.body.name || rows[0].name,
-        req.body.birthDate || rows[0].birth_date,
-        req.params.driverID
-      ];
-      const response = await db.db.query(updateOneQuery, values);
+      
       return res.status(200).json({
         driver_id: rows[0].driver_id,
-        plate: rows[0].plate,
+        taxi_id: rows[0].taxi_id,
         pos_lat: rows[0].pos_lat,
         pos_long: rows[0].pos_long
       });
-    } catch(err) {
+    } catch(error) {
       console.log(error)
       return res.status(400).json({error: error});
     }
