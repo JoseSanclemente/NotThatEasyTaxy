@@ -10,7 +10,6 @@ import withStyles from "@material-ui/core/styles/withStyles";
 // core components
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-
 import routes from "routes.js";
 
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
@@ -21,7 +20,7 @@ import logo from "assets/img/reactlogo.png";
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/driver") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -34,12 +33,12 @@ const switchRoutes = (
   </Switch>
 );
 
-class Dashboard extends React.Component {
+class Driver extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       image: image,
-      color: "orange",
+      color: "primary",
       hasImage: true,
       mobileOpen: false
     };
@@ -54,7 +53,7 @@ class Dashboard extends React.Component {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
   getRoute() {
-    return this.props.location.pathname !== "/admin/maps";
+    return this.props.location.pathname !== "/driver/taxi";
   }
   resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -89,7 +88,7 @@ class Dashboard extends React.Component {
           handleDrawerToggle={this.handleDrawerToggle}
           open={this.state.mobileOpen}
           color={this.state.color}
-          userType="/admin"
+          userType="/driver"
           {...rest}
         />
         <div className={classes.mainPanel} ref="mainPanel">
@@ -108,8 +107,8 @@ class Dashboard extends React.Component {
   }
 }
 
-Dashboard.propTypes = {
+Driver.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(dashboardStyle)(Dashboard);
+export default withStyles(dashboardStyle)(Driver);

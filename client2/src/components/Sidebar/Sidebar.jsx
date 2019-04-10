@@ -11,7 +11,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 // core components
-import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.jsx";
 
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 
@@ -20,13 +19,14 @@ const Sidebar = ({ ...props }) => {
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  const { classes, color, logo, image, logoText, routes } = props;
+
+  const { classes, color, logo, image, logoText, routes, userType } = props;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
         var activePro = " ";
         var listItemClasses;
-
+        console.log(userType);
         listItemClasses = classNames({
           [" " + classes[color]]: activeRoute(prop.layout + prop.path)
         });
@@ -43,25 +43,15 @@ const Sidebar = ({ ...props }) => {
           >
             <ListItem button className={classes.itemLink + listItemClasses}>
               {typeof prop.icon === "string" ? (
-                <Icon
-                  className={classNames(classes.itemIcon, whiteFontClasses, {
-                    [classes.itemIconRTL]: props.rtlActive
-                  })}
-                >
-                  {prop.icon}
-                </Icon>
+                <Icon>{prop.icon}</Icon>
               ) : (
                 <prop.icon
-                  className={classNames(classes.itemIcon, whiteFontClasses, {
-                    [classes.itemIconRTL]: props.rtlActive
-                  })}
+                  className={classNames(classes.itemIcon, whiteFontClasses)}
                 />
               )}
               <ListItemText
                 primary={props.rtlActive ? prop.rtlName : prop.name}
-                className={classNames(classes.itemText, whiteFontClasses, {
-                  [classes.itemTextRTL]: props.rtlActive
-                })}
+                className={classNames(classes.itemText, whiteFontClasses)}
                 disableTypography={true}
               />
             </ListItem>
@@ -98,10 +88,7 @@ const Sidebar = ({ ...props }) => {
           }}
         >
           {brand}
-          <div className={classes.sidebarWrapper}>
-            {<AdminNavbarLinks />}
-            {links}
-          </div>
+          <div className={classes.sidebarWrapper}>{links}</div>
           {image !== undefined ? (
             <div
               className={classes.background}
