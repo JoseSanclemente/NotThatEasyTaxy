@@ -89,7 +89,7 @@ const Database = {
     try {
         var trips = []
 
-        req.body.trips.forEach(trip => {
+        req.body.trips.forEach(async trip => {
             const { rows } = await db.db.query(query, [trip])
             rows.array.forEach(trip => {
                 trips.push({

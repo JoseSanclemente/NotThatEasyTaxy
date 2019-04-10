@@ -45,6 +45,27 @@ const Database = {
     }
   },
 
+  async getNear(req, res) {
+    const text = 'SELECT * FROM active_driver WHERE pos_lat = $1 AND pos_long = $2';
+    const values = [req.body.pos_lat, req.body.pos_long]
+    try {
+      const { rows } = await db.db.query(text, values);
+      
+      var drivers = []
+      rows.forEach(driver => {
+        drivers.push({
+          driver_id: driver.driver_id,
+          pos_lat: driver.pos_lat,
+          pos_long: driver.pos_long
+        })
+      })
+      return res.status(200).json(drivers);
+    } catch(error) {
+      console.log(error)
+      return res.status(400).json({error: error})
+    }
+  },
+
   async delete(req, res) {
     const query = 'DELETE FROM driver WHERE driver_id=$1 returning *';
     try {

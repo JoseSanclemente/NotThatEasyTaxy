@@ -24,11 +24,11 @@ module.exports.payClientTrips = (req, res) => {
 }
 
 module.exports.getNearbyDrivers = (req, res) => {
-    return res.status(200).send("Requested info of the Client /${req.params.ClientId}");
+    return actives.Database.getNear(req, res)
 }
 
 module.exports.requestClientTrip = (req, res) => {
-    return res.status(200).send("Requested info of the Client /${req.params.ClientId}");
+    return availableTrips.Database.create(req, res)
 }
 
 module.exports.getClientPlaces = (req, res) => {

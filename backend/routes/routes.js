@@ -1,6 +1,6 @@
 const driver = require("./driver.js")
 const vehicle = require("./taxi.js")
-const user = require("./user.js")
+const client = require("./client.js")
 
 var appRouter = function (app) {
     app.post("/api/driver/:driverID", driver.createDriver);
@@ -16,16 +16,16 @@ var appRouter = function (app) {
     app.get("/api/taxi/:taxiID", vehicle.getTaxi);
     app.put("/api/taxi/:taxiID", vehicle.updateTaxi);
 
-    app.post("/api/user/:userID", user.createUser);
-    app.get("/api/user/:userID", user.getUser);
-    app.put("/api/user/:userID", user.updateUser);
-    app.get("/api/user/:userID/getTrips", user.getUserUnpaidTrips);
-    app.post("/api/user/:userID/payTrips", user.payUserTrips);
-    app.get("/api/user/:userID/getNearbyDrivers", user.getNearbyDrivers);
-    app.post("/api/user/:userID/doTrip", user.requestUserTrip);
-    app.get("/api/user/:userID/getPlaces", user.getUserPlaces);
-    app.post("/api/user/:userID/addPlace", user.addUserPlace);
-    app.delete("/api/user/:userID/removePlace", user.deleteUserPlace);
+    app.post("/api/client/:clientID", client.createClient);
+    app.get("/api/client/:clientID", client.getClient);
+    app.put("/api/client/:clientID", client.updateClient);
+    app.get("/api/client/:clientID/getTrips", client.getClientUnpaidTrips);
+    app.post("/api/client/:clientID/payTrips", client.payClientTrips);
+    app.get("/api/client/:clientID/getNearbyDrivers", client.getNearbyDrivers);
+    app.post("/api/client/:clientID/doTrip", client.requestClientTrip);
+    app.get("/api/client/:clientID/getPlaces", client.getClientPlaces);
+    app.post("/api/client/:clientID/addPlace", client.addClientPlace);
+    app.delete("/api/client/:clientID/removePlace", client.deleteClientPlace);
 }
 
 module.exports = appRouter;
