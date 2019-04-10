@@ -40,12 +40,10 @@ class Map extends React.Component {
   constructor() {
     super();
     this.state = {
-      userLocation: {
-        lat: 0,
-        lng: 0
-      },
+      userLocation: {},
       markers: [],
-      tab: 0
+      tab: 0,
+      travelDistance: 0
     };
   }
 
@@ -61,6 +59,20 @@ class Map extends React.Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(this.getUserLocation);
   }
+
+  calculateDistance = (or_lat, or_lng, des_lat, des_lng) => {
+    var dlat = des_lat - or_lat;
+    var dlng = des_lng - or_lng;
+    var a =
+      Math.sin(dlat / 2) ^
+      (2 + Math.cos(or_lat) * Math.cos(des_lat) * Math.sin(dlng / 2)) ^
+      2;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var distance = 6.371 * c;
+    this.setState({
+      travelDistance: distance
+    });
+  };
 
   addNewMarker = (destiny_lat, destiny_lng) => {
     const currentMarkers = this.state.markers;
@@ -86,7 +98,7 @@ class Map extends React.Component {
     var or_lng = parseFloat(event.target.destiny_lng.value, 10);
     var des_lat = parseFloat(event.target.destiny_lat.value, 10);
     var des_lng = parseFloat(event.target.destiny_lng.value, 10);
-    console.log("You start to travel!");
+    this.calculateDistance(or_lat, or_lng, des_lat, des_lng);
   };
 
   render() {
@@ -120,6 +132,7 @@ class Map extends React.Component {
                     labelText="Latitud de Origen"
                     id="origin_lat"
                     type="text"
+                    value="Hola"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -129,6 +142,7 @@ class Map extends React.Component {
                   <CustomInput
                     labelText="Longitud de Origen"
                     id="origin_lng"
+                    value="Adiós"
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -149,6 +163,15 @@ class Map extends React.Component {
                   <CustomInput
                     labelText="Longitud de Destino"
                     id="destiny_lng"
+                    formControlProps={{
+                      fullWidth: true
+                    }}
+                  />
+                </GridItem>
+                <GridItem xs={12} sm={12} md={4}>
+                  <CustomInput
+                    labelText="Distancia de viaje"
+                    id="travel_distance"
                     formControlProps={{
                       fullWidth: true
                     }}
