@@ -30,12 +30,12 @@ CREATE TABLE active_driver
 CREATE TABLE available_trips
 (
     driver_id VARCHAR(10) REFERENCES driver(driver_id),
-    client_id VARCHAR(7) REFERENCES taxi(plate),
+    client_id VARCHAR(7) REFERENCES client(client_id),
     orig_pos_lat FLOAT NOT NULL,
     orig_pos_long FLOAT NOT NULL,
     dest_pos_lat FLOAT NOT NULL,
     dest_pos_long FLOAT NOT NULL,
-    PRIMARY KEY (driver_id, plate)
+    PRIMARY KEY (driver_id, client_id)
 );
 
 CREATE TABLE drive_login

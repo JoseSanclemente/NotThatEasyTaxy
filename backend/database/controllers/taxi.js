@@ -33,7 +33,7 @@ const Database = {
   async get(req, res) {
     const text = 'SELECT * FROM taxi WHERE taxi_id = $1';
     try {
-      const { rows } = await db.query(text, [req.params.taxiID]);
+      const { rows } = await db.db.query(text, [req.params.taxiID]);
       if (!rows[0]) {
         return res.status(404).json({error: 'taxi not found'});
       }
@@ -57,7 +57,7 @@ const Database = {
       SET model=$1, year=$2, soat=$3, trunk=$4, brand=$5
       WHERE taxi_id=$6 returning *`;
     try {
-      const { rows } = await db.query(findOneQuery, [req.params.taxiID]);
+      const { rows } = await db.db.query(findOneQuery, [req.params.taxiID]);
       if(!rows[0]) {
         return res.status(404).json({error: 'taxi not found'});
       }
@@ -69,7 +69,7 @@ const Database = {
         req.body.brand || rows[0].brand,
         req.params.taxiID
       ];
-      const response = await db.query(updateOneQuery, values);
+      const response = await db.db.query(updateOneQuery, values);
       return res.status(200).json({
         taxi_id: rows[0].taxi_id,
         model: rows[0].model,

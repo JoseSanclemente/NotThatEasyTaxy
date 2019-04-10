@@ -15,9 +15,9 @@ const Database = {
 
     try {
       const { rows } = await db.db.query(text, values);
-      return res.status(201).send({
+      return res.status(201).json({
         driver_id: rows[0].driver_id,
-        plate: rows[0].plate,
+        taxi_id: rows[0].taxi_id,
         name: rows[0].name,
         birth_date: rows[0].birth_date
       });
@@ -29,7 +29,7 @@ const Database = {
   async get(req, res) {
     const text = 'SELECT * FROM driver WHERE driver_id = $1';
     try {
-      const { rows } = await db.query(text, [req.params.driverID]);
+      const { rows } = await db.db.query(text, [req.params.driverID]);
       if (!rows[0]) {
         return res.status(404).json({error: 'driver not found'});
       }
@@ -51,7 +51,7 @@ const Database = {
       SET plate=$1, name=$2, birth_date=$3
       WHERE driver_id=$4 returning *`;
     try {
-      const { rows } = await db.query(findOneQuery, [req.params.taxiID]);
+      const { rows } = await db.db.query(findOneQuery, [req.params.taxiID]);
       if(!rows[0]) {
         return res.status(404).json({error: 'taxi not found'});
       }
@@ -61,7 +61,7 @@ const Database = {
         req.body.birthDate || rows[0].birth_date,
         req.params.driverID
       ];
-      const response = await db.query(updateOneQuery, values);
+      const response = await db.db.query(updateOneQuery, values);
       return res.status(200).json({
         driver_id: rows[0].driver_id,
         taxi_id: rows[0].taxi_id,

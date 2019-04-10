@@ -29,7 +29,7 @@ const Database = {
   async get(req, res) {
     const text = 'SELECT * FROM driver WHERE driver_id = $1';
     try {
-      const { rows } = await db.query(text, [req.params.driverID]);
+      const { rows } = await db.db.query(text, [req.params.driverID]);
       if (!rows[0]) {
         return res.status(404).json({error: 'driver not found'});
       }
@@ -48,7 +48,7 @@ const Database = {
   async delete(req, res) {
     const query = 'DELETE FROM driver WHERE driver_id=$1 returning *';
     try {
-      const { rows } = await db.query(findOneQuery, [req.params.taxiID]);
+      const { rows } = await db.db.query(findOneQuery, [req.params.taxiID]);
       if(!rows[0]) {
         return res.status(404).json({error: 'taxi not found'});
       }
@@ -58,7 +58,7 @@ const Database = {
         req.body.birthDate || rows[0].birth_date,
         req.params.driverID
       ];
-      const response = await db.query(updateOneQuery, values);
+      const response = await db.db.query(updateOneQuery, values);
       return res.status(200).json({
         driver_id: rows[0].driver_id,
         plate: rows[0].plate,
