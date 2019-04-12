@@ -163,13 +163,26 @@
   }
 
   &.md-fab,
-  &.md-just-icon {
+  &.md-success-icon {
     @include btn-styles($brand-success);
     font-size: 40px;
     height: 60px;
     min-width: 60px;
     width: 60px;
     padding: 0;
+    overflow: hidden;
+    position: relative;
+    line-height: 60px;
+    border-radius: 50%;
+  }
+
+  &.md-info-icon {
+    @include btn-styles($brand-info);
+    font-size: 40px;
+    height: 60px;
+    min-width: 60px;
+    width: 60px;
+    top: 60px;
     overflow: hidden;
     position: relative;
     line-height: 60px;
