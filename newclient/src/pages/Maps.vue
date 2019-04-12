@@ -1,18 +1,22 @@
 <template>
   <div>
     <div id="floating-panel">
+      <md-dialog-prompt
+        :md-active.sync="active"
+        v-model="value"
+        md-title="Agregar a mis Favoritos"
+        md-input-maxlength="30"
+        md-input-placeholder="Nombre de la ubicación"
+        md-confirm-text="Done"
+        :md-closed="handleAddButton('bottom', 'center')"
+      />
       <md-button
         title="Agregar a Favoritos"
         class="md-just-icon"
-        @click="handleAddButton('bottom', 'center')"
+        @click="showNameInput"
       >
         <md-icon>add</md-icon>
       </md-button>
-      <md-field>
-        <label>Type here!</label>
-        <md-input v-model="type"></md-input>
-        <span class="md-helper-text">Helper text</span>
-      </md-field>
     </div>
     <div id="map"></div>
   </div>
@@ -35,23 +39,26 @@
 import GoogleMapsLoader from "google-maps";
 
 var markerBuffer;
-var mapBuffer;
-var userMarker;
 var favLocations = [];
 
-function addMarkertoFav() {
+function addMarkertoFav(name) {
   if (markerBuffer != null) {
     markerBuffer.setAnimation(false);
+    markerBuffer.setTitle(name);
     favLocations.push(markerBuffer);
     markerBuffer = null;
     return true;
-  } else {
-    alert("Selecciona una ubicación");
-    return false;
   }
+  return false;
 }
 
 export default {
+  data: function() {
+    return {
+      active: false,
+      value: null
+    };
+  },
   methods: {
     initMap(google) {
       navigator.geolocation.getCurrentPosition(function(position) {
@@ -69,7 +76,6 @@ export default {
           document.getElementById("map"),
           mapOptions
         );
-        mapBuffer = map;
 
         var marker = new google.maps.Marker({
           position: userLocation,
@@ -104,9 +110,20 @@ export default {
         });
       });
     },
+    showNameInput() {
+      if (markerBuffer != null) {
+        this.active = true;
+      } else {
+        alert("Selecciona una ubicación");
+      }
+    },
     handleAddButton(verticalAlign, horizontalAlign) {
-      var showNotify = addMarkertoFav();
-      console.log(favLocations);
+      var showNotify = false;
+      if (this.value != null) {
+        showNotify = addMarkertoFav(this.value);
+        console.log(favLocations);
+        this.value = null;
+      }
 
       if (showNotify) {
         this.$notify({
