@@ -46,66 +46,59 @@
 <script>
 import GoogleMapsLoader from "google-maps";
 
-var markerBuffer;
+var destinationCoordsBuffer;
+var mapGlobalInstance;
 var favLocations = [];
 
-function mapListener(map) {
+function mapListener(map, userMaker, directionsService, directionsDisplay) {
   map.addListener("click", function(e) {
-    var newCoords = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+    destinationCoordsBuffer = new google.maps.LatLng(
+      e.latLng.lat(),
+      e.latLng.lng()
+    );
 
-    var newMarker = new google.maps.Marker({
-      position: newCoords,
-      title: "Ubicación de Destino",
-      draggable: false,
-      animation: google.maps.Animation.BOUNCE
-    });
-
-    if (markerBuffer != null) {
-      markerBuffer.setMap(null);
-      markerBuffer = newMarker;
-      markerBuffer.setMap(map);
-    } else {
-      markerBuffer = newMarker;
-      markerBuffer.setMap(map);
-    }
+    calculateRoute(
+      directionsDisplay,
+      directionsService,
+      userMaker.position,
+      destinationCoordsBuffer,
+      map
+    );
   });
 }
 
 function addMarkertoFav(name) {
-  if (markerBuffer != null) {
-    markerBuffer.setAnimation(false);
-    markerBuffer.setTitle(name);
-    favLocations.push(markerBuffer);
-    markerBuffer = null;
+  if (destinationCoordsBuffer != null) {
+    var marker = new google.maps.Marker({
+      position: destinationCoordsBuffer,
+      title: name
+    });
+
+    marker.setMap(mapGlobalInstance);
+
+    favLocations.push(marker);
+
+    destinationCoordsBuffer = null;
     return true;
   }
   return false;
 }
-function calculateAndDisplayRoute(
+function calculateRoute(
   directionsDisplay,
   directionsService,
-  userMaker,
-  destinationMaker,
-  stepDisplay,
+  startCoords,
+  endCoords,
   map
 ) {
-  // Retrieve the start and end locations and create a DirectionsRequest using
-  // WALKING directions.
   directionsService.route(
     {
-      origin: userMaker,
-      destination: destinationMaker,
+      origin: startCoords,
+      destination: endCoords,
       travelMode: "DRIVING"
     },
     function(response, status) {
-      // Route the directions and pass the response to a function to create
-      // markers for each step.
       if (status === "OK") {
-        document.getElementById(
-          "warnings-panel"
-        ).innerHTML = directionsDisplay.setDirections(response);
-      } else {
-        window.alert("Directions request failed due to " + status);
+        directionsDisplay.setDirections(response);
       }
     }
   );
@@ -135,6 +128,8 @@ export default {
           mapOptions
         );
 
+        mapGlobalInstance = map;
+
         var marker = new google.maps.Marker({
           position: userLocation,
           title: "Mi posición",
@@ -142,8 +137,6 @@ export default {
         });
 
         marker.setMap(map);
-
-        mapListener(map);
 
         // Instantiate a directions service.
         var directionsService = new google.maps.DirectionsService();
@@ -153,32 +146,13 @@ export default {
           map: map
         });
 
-        // Instantiate an info window to hold step text.
-        var stepDisplay = new google.maps.InfoWindow();
+        mapListener(map, marker, directionsService, directionsDisplay);
 
         // Display the route between the initial start and end selections.
-        calculateAndDisplayRoute(
-          directionsDisplay,
-          directionsService,
-          markerArray,
-          stepDisplay,
-          map
-        );
-        // Listen to change events from the start and end lists.
-        var onChangeHandler = function() {
-          calculateAndDisplayRoute(
-            directionsDisplay,
-            directionsService,
-            marker,
-            markerBuffer,
-            stepDisplay,
-            map
-          );
-        };
       });
     },
     showNameInput() {
-      if (markerBuffer != null) {
+      if (destinationCoordsBuffer != null) {
         this.active = true;
       } else {
         alert("Selecciona una ubicación");
