@@ -47,8 +47,8 @@ const Database = {
   },
 
   async getNear(req, res) {
-    const text = 'SELECT * FROM active_driver WHERE pos_lat = $1 AND pos_long = $2';
-    const values = [req.body.pos_lat, req.body.pos_long]
+    const text = 'SELECT * FROM active_driver WHERE pos_lat >= $1 AND pos_lat <= $2 AND pos_long >= $3 AND pos_long <= $4';
+    const values = [req.body.pos_lat - 0.01, req.body.pos_lat + 0.01, req.body.pos_long - 0.01, req.body.pos_long + 0.01]
     try {
       const { rows } = await db.db.query(text, values);
       
