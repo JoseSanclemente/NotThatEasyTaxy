@@ -20,7 +20,7 @@ const Database = {
   async delete(req, res) {
     const query = `DELETE FROM place
       WHERE client_id = $1 AND name = $2 returning *`
-    const values = [req.params.clientID, req.body.name]
+    const values = [req.params.clientID, req.query.name]
 
     try {
       const { rows } = await db.db.query(query, values)

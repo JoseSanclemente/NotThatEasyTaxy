@@ -98,7 +98,7 @@ const Database = {
         return res.status(200).json({ message: "ok", pending: false})
       }
 
-      return res.status(201).json({ message: "pending", pending: true})
+      return res.status(200).json({ message: "pending", pending: true})
     } catch (error) {
       return res.status(400).json({ error: error })
     }
