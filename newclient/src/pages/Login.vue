@@ -59,7 +59,7 @@ export default {
             return
             //TODO: Notidy error in login
           }
-          this.$router.push('/user/dashboard')
+          this.$router.push('/user/map')
         })
     }
   },

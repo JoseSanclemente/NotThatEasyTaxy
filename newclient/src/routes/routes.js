@@ -1,11 +1,11 @@
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
+import Maps from "@/pages/Maps.vue";
 /* import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import TableList from "@/pages/TableList.vue";
 import Typography from "@/pages/Typography.vue";
 import Icons from "@/pages/Icons.vue";
-import Maps from "@/pages/Maps.vue";
 import Notifications from "@/pages/Notifications.vue"; */
 
 const routes = [
@@ -32,7 +32,16 @@ const routes = [
   {
     path: "/user",
     component: DashboardLayout,
-    children: []
+    children: [
+      {
+        path: "/user/map",
+        name: "Maps",
+        meta: {
+          hideFooter: true
+        },
+        component: Maps
+      }
+    ]
   },
   {
     path: "/driver",
