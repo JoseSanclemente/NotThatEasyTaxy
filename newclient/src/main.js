@@ -14,6 +14,7 @@ import Notifications from "./components/NotificationPlugin";
 
 // MaterialDashboard plugin
 import MaterialDashboard from "./material-dashboard";
+import ToggleButton from "vue-js-toggle-button";
 
 import Chartist from "chartist";
 
@@ -30,6 +31,7 @@ Vue.use(MaterialDashboard);
 Vue.use(GlobalComponents);
 Vue.use(GlobalDirectives);
 Vue.use(Notifications);
+Vue.use(ToggleButton);
 
 /* eslint-disable no-new */
 new Vue({

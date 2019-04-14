@@ -8,7 +8,7 @@
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/user/maps">
+      <sidebar-link to="/user/map">
         <md-icon>location_on</md-icon>
         <p>Viajar</p>
       </sidebar-link>
