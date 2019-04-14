@@ -32,6 +32,7 @@
 </template>
 <script>
 import LoginCard from "@/components/Cards/LoginCard.vue";
+import superagent from "superagent";
 
 export default {
   components: {
@@ -40,13 +41,26 @@ export default {
   data() {
     return {
       type: "user",
-      email: "",
+      id: "",
       password: ""
     };
   },
   methods: {
     signIn: function() {
-      //TODO:  implemnt sign in function
+      superagent
+        .get("http://localhost:8080/api/driver/" + this.id)
+        .set("key", this.password)
+        .end((err, res) => {
+          if (err != null) {
+            return
+            //TODO: Notify error in conection
+          }
+          if(res.statusCode != 200) {
+            return
+            //TODO: Notidy error in login
+          }
+          this.$router.push('/user/dashboard')
+        })
     }
   },
   computed: {
