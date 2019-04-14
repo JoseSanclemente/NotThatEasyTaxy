@@ -88,9 +88,13 @@ export default {
   },
   data: function() {
     return {
-      mapInstance: null,
-      userCoords: null,
-      destinationCoords: null,
+      googleAPI: {
+        map: null,
+        userMarker: null,
+        destinationMarker: null,
+        directionsService: null,
+        directionsDisplay: null
+      },
       locationName: "",
       favLocations: [],
       showInputName: false,
@@ -105,12 +109,12 @@ export default {
       this.travelCost = totalCost;
       this.travelDuration = duration;
     },
-    calculateRoute(directionsDisplay, directionsService) {
+    calculateRoute(endMarker) {
       let _this = this;
-      directionsService.route(
+      _this.googleAPI.directionsService.route(
         {
-          origin: _this.userCoords,
-          destination: _this.destinationCoords,
+          origin: _this.googleAPI.userMarker.position,
+          destination: endMarker.position,
           travelMode: "DRIVING"
         },
         function(response, status) {
@@ -119,29 +123,34 @@ export default {
             var distance = response.routes[0].legs[0].distance.value;
             _this.calculateTravelInformation(distance, duration);
 
-            directionsDisplay.setDirections(response);
+            _this.googleAPI.directionsDisplay.setDirections(response);
           }
         }
       );
     },
     showLocationNamePrompt() {
-      if (this.destinationCoords != null) {
+      if (this.googleAPI.destinationMarker != null) {
         this.showInputName = true;
       } else {
         alert("Selecciona una ubicación");
       }
     },
     addMarkerToFavorites() {
-      var marker = new google.maps.Marker({
-        position: this.destinationCoords,
-        title: this.locationName
+      let _this = this;
+      var favoriteMarker;
+
+      _this.googleAPI.destinationMarker.setTitle(_this.locationName);
+
+      favoriteMarker = _this.googleAPI.destinationMarker;
+      favoriteMarker.setMap(_this.googleAPI.map);
+
+      favoriteMarker.addListener("click", function() {
+        _this.calculateRoute(favoriteMarker);
       });
 
-      marker.setMap(this.mapInstance);
-
-      this.favLocations.push(marker);
-      this.showNotification = true;
-      this.destinationCoords = null;
+      _this.favLocations.push(_this.googleAPI.destinationMarker);
+      _this.showNotification = true;
+      _this.destinationCoords = null;
     },
     handleAddFavoriteButton() {
       let _this = this;
@@ -154,50 +163,55 @@ export default {
         _this.$notify({
           message: "¡Agregado a Favoritos!",
           icon: "check_circle_outline",
-          horizontalAlign: "bottom",
-          verticalAlign: "center",
+          horizontalAlign: "center",
+          verticalAlign: "top",
           type: "success"
         });
+
         _this.showNotification = false;
       }
     },
     initMap(google) {
       let _this = this;
+      var userCoords;
       navigator.geolocation.getCurrentPosition(function(position) {
-        _this.userCoords = new google.maps.LatLng(
+        userCoords = new google.maps.LatLng(
           position.coords.latitude,
           position.coords.longitude
         );
 
         var mapOptions = {
           zoom: 15,
-          center: _this.userCoords,
+          center: userCoords,
           scrollwheel: false
         };
 
-        _this.mapInstance = new google.maps.Map(
+        _this.googleAPI.map = new google.maps.Map(
           document.getElementById("map"),
           mapOptions
         );
 
-        var userMarker = new google.maps.Marker({
-          position: _this.userCoords,
+        _this.googleAPI.userMarker = new google.maps.Marker({
+          position: userCoords,
           title: "Mi posición"
         });
-        userMarker.setMap(_this.mapInstance);
 
-        var directionsService = new google.maps.DirectionsService();
-        var directionsDisplay = new google.maps.DirectionsRenderer({
-          map: _this.mapInstance
+        _this.googleAPI.userMarker.setMap(_this.googleAPI.map);
+
+        _this.googleAPI.directionsService = new google.maps.DirectionsService();
+        _this.googleAPI.directionsDisplay = new google.maps.DirectionsRenderer({
+          map: _this.googleAPI.map
         });
 
-        _this.mapInstance.addListener("click", function(e) {
-          _this.destinationCoords = new google.maps.LatLng(
+        _this.googleAPI.map.addListener("click", function(e) {
+          var destinationCoords = new google.maps.LatLng(
             e.latLng.lat(),
             e.latLng.lng()
           );
-
-          _this.calculateRoute(directionsDisplay, directionsService);
+          _this.googleAPI.destinationMarker = new google.maps.Marker({
+            position: destinationCoords
+          });
+          _this.calculateRoute(_this.googleAPI.destinationMarker);
         });
       });
     }
