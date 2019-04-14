@@ -103,7 +103,7 @@ const Database = {
   async login(req, res) {
     const query = `SELECT * FROM driver_login
       WHERE driver_id = $1 AND password=$2;`
-    const values = [req.params.driverID, req.body.password]
+    const values = [req.params.driverID, req.header("password")]
 
     try {
       const { rows } = await db.db.query(query, values)
