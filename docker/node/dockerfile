@@ -1,0 +1,8 @@
+FROM node:8.15.1-alpine
+MAINTAINER Adrian echeverri.camilo@correounivalle.edu.co
+
+COPY ./backend/ /server/
+
+EXPOSE 8080
+
+CMD ["node", "./server/main.js"]

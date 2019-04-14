@@ -1,0 +1,10 @@
+FROM postgres:9.5-alpine
+MAINTAINER Adrian echeverri.camilo@correounivalle.edu.co
+
+COPY ./init/init.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 5432
+
+ENV POSTGRES_USER 'postgres'
+ENV POSTGRES_PASSWORD 'postgress'
+ENV POSTGRES_DB 'DBs_project'
