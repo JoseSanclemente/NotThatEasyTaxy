@@ -5,9 +5,9 @@ dotenv.config()
 
 const pool = new Pool({
   user: 'postgres',
-  host: 'localhost',
-  database: 'bases',
-  password: 'root',
+  host: 'database',
+  database: 'DBs_project',
+  password: 'postgress',
   port: 5432,
   //connectionString: process.env.DATABASE_URL
 });

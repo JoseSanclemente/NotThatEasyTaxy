@@ -49,7 +49,7 @@ export default {
     signIn: function() {
       superagent
         .get("http://localhost:8080/api/driver/" + this.id)
-        .set("key", this.password)
+        .set("password", this.password)
         .end((err, res) => {
           if (err != null) {
             return
