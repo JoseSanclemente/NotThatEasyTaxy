@@ -10,6 +10,11 @@ import Notifications from "@/pages/Notifications.vue"; */
 
 const routes = [
   {
+    path: "/",
+    component: DashboardLayout,
+    redirect: "/auth/login"
+  },
+  {
     path: "/auth",
     name: "auth",
     redirect: "/auth/login",
