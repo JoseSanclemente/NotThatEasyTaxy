@@ -89,7 +89,7 @@ const Database = {
   async login(req, res) {
     const query = `SELECT * FROM client_login
       WHERE client_id = $1 AND password=$2`
-    const values = [req.params.clientID, req.body.password]
+    const values = [req.params.clientID, req.header("password")]
 
     try {
       const { rows } = await db.db.query(query, values)

@@ -4,15 +4,15 @@
 
     <side-bar>
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/user/dashboard">
+      <sidebar-link to="/client/dashboard" v-if="isUser()">
         <md-icon>dashboard</md-icon>
         <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/user/map">
+      <sidebar-link to="/client/map" v-if="isUser()">
         <md-icon>location_on</md-icon>
         <p>Viajar</p>
       </sidebar-link>
-      <sidebar-link to="/user/profile">
+      <sidebar-link to="/client/profile">
         <md-icon>person</md-icon>
         <p>User Profile</p>
       </sidebar-link>
@@ -47,15 +47,22 @@ import MobileMenu from "@/pages/Layout/MobileMenu.vue";
 
 export default {
   data: function() {
-    return {
-      n: "TPm"
-    };
+    return {};
   },
   components: {
     TopNavbar,
     DashboardContent,
     ContentFooter,
     MobileMenu
+  },
+  methods: {
+    isUser: function() {
+      return this.$route.path.includes("client");
+    },
+
+    isDriver: function() {
+      return this.$route.path.includes("driver");
+    }
   }
 };
 </script>

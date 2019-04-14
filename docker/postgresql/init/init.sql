@@ -52,7 +52,7 @@ CREATE TABLE place
 
 CREATE TABLE client_login
 (
-    client_id VARCHAR(12) REFERENCES driver(driver_id),
+    client_id VARCHAR(12) REFERENCES client(client_id),
     password VARCHAR(50) NOT NULL
 );
 
@@ -92,6 +92,7 @@ INSERT INTO driver_login(driver_id, password) VALUES('987654321', 'abc');
 
 INSERT INTO client(client_id, name, credit_card) VALUES('571112223344', 'Andrea', '123456789');
 INSERT INTO client(client_id, name, credit_card) VALUES('575556667788', 'Felipe', '123456789');
+INSERT INTO client_login(client_id, password) VALUES('571112223344', 'abc');
 
 -- values to test active drivers
 -- INSERT INTO available_trips(driver_id, client_id, orig_pos_lat, orig_pos_long, dest_pos_lat, dest_pos_long)
