@@ -10,6 +10,20 @@ import Notifications from "@/pages/Notifications.vue";
 
 const routes = [
   {
+    path: "/auth",
+    name: "auth",
+    component: () =>
+      import(/* webpackChunkName: "auth" */ "../pages/Layout/AuthLayout.vue"),
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: () =>
+          import(/* webpackChunkName: "login" */ "../pages/Login.vue")
+      }
+    ]
+  },
+  {
     path: "/",
     component: DashboardLayout,
     redirect: "/user/dashboard",
