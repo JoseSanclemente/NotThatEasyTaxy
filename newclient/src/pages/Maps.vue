@@ -18,7 +18,11 @@
         <md-icon>add</md-icon>
       </md-button>
 
-      <md-button title="Realizar viaje" class="md-info-icon">
+      <md-button
+        title="Realizar viaje"
+        class="md-info-icon"
+        @click="handleDoTripButton"
+      >
         <md-icon>local_taxi</md-icon>
       </md-button>
     </div>
@@ -96,7 +100,10 @@ export default {
         directionsDisplay: null
       },
       locationName: "",
-      favLocations: [],
+      favLocations: [
+        { lat: 3.4372201, lng: -76.5224991, name: "Mi Casa" },
+        { lat: 3.47012, lng: -76.5225767, name: "Mi Trabajo" }
+      ],
       showInputName: false,
       showNotification: false,
       travelDuration: "",
@@ -171,6 +178,31 @@ export default {
         _this.showNotification = false;
       }
     },
+    createMarker(google, pos, name) {
+      let _this = this;
+      var marker = new google.maps.Marker({
+        position: pos,
+        title: name,
+        animation: google.maps.Animation.DROP,
+        map: _this.googleAPI.map
+      });
+      google.maps.event.addListener(marker, "click", function() {
+        _this.calculateRoute(marker);
+      });
+    },
+    loadFavoritePlaces(google) {
+      let _this = this;
+      for (var i = 0; i < _this.favLocations.length; i++) {
+        var coords = new google.maps.LatLng(
+          _this.favLocations[i].lat,
+          _this.favLocations[i].lng
+        );
+        _this.createMarker(google, coords, _this.favLocations[i].name);
+      }
+    },
+    handleDoTripButton() {
+      console.log("Realizando el viaje!");
+    },
     initMap(google) {
       let _this = this;
       var userCoords;
@@ -181,7 +213,7 @@ export default {
         );
 
         var mapOptions = {
-          zoom: 15,
+          zoom: 12,
           center: userCoords,
           scrollwheel: false
         };
@@ -193,10 +225,11 @@ export default {
 
         _this.googleAPI.userMarker = new google.maps.Marker({
           position: userCoords,
-          title: "Mi posición"
+          title: "Mi posición",
+          map: _this.googleAPI.map
         });
 
-        _this.googleAPI.userMarker.setMap(_this.googleAPI.map);
+        _this.loadFavoritePlaces(google);
 
         _this.googleAPI.directionsService = new google.maps.DirectionsService();
         _this.googleAPI.directionsDisplay = new google.maps.DirectionsRenderer({

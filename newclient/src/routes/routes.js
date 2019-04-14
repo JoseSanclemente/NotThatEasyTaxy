@@ -1,8 +1,8 @@
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
 import Maps from "@/pages/Maps.vue";
-/* import Dashboard from "@/pages/Dashboard.vue";
-import UserProfile from "@/pages/UserProfile.vue";
+import Dashboard from "@/pages/Dashboard.vue";
+/*import UserProfile from "@/pages/UserProfile.vue";
 import TableList from "@/pages/TableList.vue";
 import Typography from "@/pages/Typography.vue";
 import Icons from "@/pages/Icons.vue";
@@ -33,6 +33,11 @@ const routes = [
     path: "/user",
     component: DashboardLayout,
     children: [
+      {
+        path: "/user/dashboard",
+        name: "Dashboard",
+        component: Dashboard
+      },
       {
         path: "/user/map",
         name: "Maps",
