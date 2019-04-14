@@ -30,16 +30,16 @@ const routes = [
     ]
   },
   {
-    path: "/user",
+    path: "/client",
     component: DashboardLayout,
     children: [
       {
-        path: "/user/dashboard",
+        path: "/client/dashboard",
         name: "Dashboard",
         component: Dashboard
       },
       {
-        path: "/user/map",
+        path: "/client/map",
         name: "Maps",
         meta: {
           hideFooter: true

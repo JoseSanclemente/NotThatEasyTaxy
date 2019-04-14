@@ -7,8 +7,8 @@
       <md-field class="md-form-group" slot="inputs">
         <label for="font">Tipo de usuario</label>
         <md-select v-model="type">
-          <md-option value="driver">Conductor</md-option>
-          <md-option value="user">Pasajero</md-option>
+          <md-option value="driver">   Conductor</md-option>
+          <md-option value="client">   Pasajero</md-option>
         </md-select>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      type: "user",
+      type: "client",
       id: "",
       password: ""
     };
@@ -48,7 +48,7 @@ export default {
   methods: {
     signIn: function() {
       superagent
-        .get("http://localhost:8080/api/driver/" + this.id)
+        .get("http://localhost:8080/api/" + this.type + "/" + this.id)
         .set("password", this.password)
         .end((err, res) => {
           if (err != null) {
@@ -59,7 +59,7 @@ export default {
             return
             //TODO: Notidy error in login
           }
-          this.$router.push('/user/map')
+          this.$router.push('/' + this.type + '/map')
         })
     }
   },
