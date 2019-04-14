@@ -49,12 +49,8 @@
 
 <script>
 import GoogleMapsLoader from "google-maps";
-import { StatsCard } from "@/components";
 
 export default {
-  components: {
-    StatsCard
-  },
   data: function() {
     return {
       isActive: false,
@@ -81,8 +77,7 @@ export default {
           document.getElementById("map"),
           mapOptions
         );
-
-        var driverMaker = new google.maps.Marker({
+        new google.maps.Marker({
           position: userCoords,
           title: "Mi posición",
           map: map

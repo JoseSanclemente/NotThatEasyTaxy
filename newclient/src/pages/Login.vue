@@ -1,5 +1,8 @@
 <template>
-  <div class="md-layout md-gutter md-alignment-center-center text-center" id="main-container">
+  <div
+    class="md-layout md-gutter md-alignment-center-center text-center"
+    id="main-container"
+  >
     <login-card
       class="md-layout-item md-size-33 md-medium-size-50 md-small-size-70 md-xsmall-size-100"
     >
@@ -7,8 +10,8 @@
       <md-field class="md-form-group" slot="inputs">
         <label for="font">Tipo de usuario</label>
         <md-select v-model="type">
-          <md-option value="driver">   Conductor</md-option>
-          <md-option value="client">   Pasajero</md-option>
+          <md-option value="driver"> Conductor</md-option>
+          <md-option value="client"> Pasajero</md-option>
         </md-select>
       </md-field>
       <md-field class="md-form-group" slot="inputs">
@@ -19,14 +22,19 @@
       <md-field class="md-form-group" slot="inputs">
         <md-icon>lock_outline</md-icon>
         <label>Contraseña...</label>
-        <md-input v-model="password" type="password" v-on:keyup.enter="signIn()"></md-input>
+        <md-input
+          v-model="password"
+          type="password"
+          v-on:keyup.enter="signIn()"
+        ></md-input>
       </md-field>
       <md-button
         id="login-button"
         slot="footer"
         class="md-simple md-success md-lg"
         v-on:click="signIn()"
-      >Entrar</md-button>
+        >Entrar</md-button
+      >
     </login-card>
   </div>
 </template>
@@ -52,23 +60,23 @@ export default {
         .set("password", this.password)
         .end((err, res) => {
           if (err != null) {
-            return
+            return;
             //TODO: Notify error in conection
           }
-          if(res.statusCode != 200) {
-            return
+          if (res.statusCode != 200) {
+            return;
             //TODO: Notidy error in login
           }
-          this.$router.push('/' + this.type + '/map')
-        })
+          this.$router.push("/" + this.type + "/map");
+        });
     }
   },
   computed: {
     idLabel: function() {
       if (this.type == "driver") {
-        return "Cédula..."
+        return "Cédula...";
       }
-      return "Número de telefono..."
+      return "Número de telefono...";
     }
   }
 };
