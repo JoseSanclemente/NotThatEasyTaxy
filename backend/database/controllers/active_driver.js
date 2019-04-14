@@ -58,7 +58,12 @@ const Database = {
     const query = `SELECT * FROM (
       (SELECT driver_id, SUM(score) AS score, COUNT(score) AS total FROM trip GROUP BY driver_id) AS scores
       NATURAL JOIN (SELECT * FROM active_driver WHERE pos_lat >= $1 AND pos_lat <= $2 AND pos_long >= $3 AND pos_long <= $4) AS drivers)`
-    const values = [req.query.pos_lat - 0.01, req.query.pos_lat + 0.01, req.query.pos_long - 0.01, req.query.pos_long + 0.01]
+    const values = [
+      parseFloat(req.query.pos_lat) - 0.01,
+      parseFloat(req.query.pos_lat) + 0.01,
+      parseFloat(req.query.pos_long) - 0.01,
+      parseFloat(req.query.pos_long) + 0.01
+    ]
 
     try {
       const response = await db.db.query(query, values)
