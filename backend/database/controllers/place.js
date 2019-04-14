@@ -1,11 +1,11 @@
 var db = require('../db')
 
 const Database = {
+
   async create(req, res) {
     const query = `INSERT INTO
-          place(name, client_id, pos_lat, pos_long)
-            VALUES($1, $2, $3, $4)
-            returning *`
+      place(name, client_id, pos_lat, pos_long)
+      VALUES($1, $2, $3, $4) returning *`
     const values = [req.body.name, req.params.clientID, req.body.pos_lat, req.body.pos_long]
 
     try {
@@ -19,7 +19,7 @@ const Database = {
 
   async delete(req, res) {
     const query = `DELETE FROM place
-                    WHERE client_id = $1 AND name = $2 returning *`
+      WHERE client_id = $1 AND name = $2 returning *`
     const values = [req.params.clientID, req.body.name]
 
     try {
@@ -33,20 +33,20 @@ const Database = {
 
   async getAll(req, res) {
     const query = `SELECT * FROM place
-                    WHERE client_id = $1;`
+      WHERE client_id = $1`
 
     try {
       const { rows } = await db.db.query(query, [req.params.clientID])
 
       var places = []
-        rows.forEach(place => {
-          places.push({
-                client_id: place.client_id,
-                name: place.name,
-                pos_lat: place.pos_lat,
-                pos_long: place.pos_long
-            })
-        });
+      rows.forEach(place => {
+        places.push({
+          client_id: place.client_id,
+          name: place.name,
+          pos_lat: place.pos_lat,
+          pos_long: place.pos_long
+        })
+      })
 
       return res.status(200).json(places)
     } catch (error) {
@@ -56,4 +56,4 @@ const Database = {
   }
 }
 
-module.exports.Database  = Database;
+module.exports.Database  = Database

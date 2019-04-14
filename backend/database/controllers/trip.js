@@ -1,12 +1,13 @@
 var db = require('../db')
-const uuidv4 = require('uuid/v4');
+const uuidv4 = require('uuid/v4')
 
 const Database = {
+  
   async create(req, res) {
     const query = `INSERT INTO
-                    trip(trip_id, driver_id, client_id, orig_pos_lat, orig_pos_long, dest_pos_lat, dest_pos_long, date, charged, paid_out)
-                    VALUES($1, $2, $3, $4, $5, $6, $7, to_timestamp($8), FALSE, FALSE)
-                    returning *`
+    trip(trip_id, driver_id, client_id, orig_pos_lat, orig_pos_long, dest_pos_lat, dest_pos_long, date, charged, paid_out)
+    VALUES($1, $2, $3, $4, $5, $6, $7, to_timestamp($8), FALSE, FALSE)
+    returning *`
     const values = [
         uuidv4(),
         req.params.driverID,
@@ -21,6 +22,7 @@ const Database = {
     try {
         const  response  = await db.db.query(query, values)
         const rows = response.rows
+
         return res.status(200).json({
             trip_id: rows[0].trip_id,
             driver_id: rows[0].driver_id,
@@ -46,13 +48,13 @@ const Database = {
 
     if (req.params.driverID != undefined) {
         query = `SELECT * FROM trip
-        WHERE driver_id = $1 AND paid_out = FALSE AND charged = TRUE;`
+          WHERE driver_id = $1 AND paid_out = FALSE AND charged = TRUE`
         values.push(req.params.driverID)
     }
 
     if (req.params.clientID != undefined) {
         query = `SELECT * FROM trip
-        WHERE client_id = $1 AND charged = FALSE;`
+          WHERE client_id = $1 AND charged = FALSE`
         values.push(req.params.clientID)
     }
     
@@ -60,21 +62,21 @@ const Database = {
         const { rows } = await db.db.query(query, values)
 
         var trips = []
-        rows.forEach(trip => {
-            trips.push({
-                trip_id: trip.trip_id,
-                driver_id: trip.driver_id,
-                client_id: trip.client_id,
-                orig_pos_lat: trip.orig_pos_lat,
-                orig_pos_long: trip.orig_pos_long,
-                dest_pos_lat: trip.dest_pos_lat,
-                dest_pos_long: trip.dest_pos_long,
-                score : trip.score,
-                date: trip.date,
-                charged: trip.charged,
-                paid_out: trip.paid_out
-            })
-        });
+        for (const trip of rows) {
+          trips.push({
+            trip_id: trip.trip_id,
+            driver_id: trip.driver_id,
+            client_id: trip.client_id,
+            orig_pos_lat: trip.orig_pos_lat,
+            orig_pos_long: trip.orig_pos_long,
+            dest_pos_lat: trip.dest_pos_lat,
+            dest_pos_long: trip.dest_pos_long,
+            score : trip.score,
+            date: trip.date,
+            charged: trip.charged,
+            paid_out: trip.paid_out
+          })
+        }
 
       return res.status(200).json(trips)
     } catch (error) {
@@ -98,22 +100,22 @@ const Database = {
         var trips = []
 
         req.body.trips.forEach(async trip => {
-            const { rows } = await db.db.query(query, [trip])
-            rows.forEach(trip => {
-                trips.push({
-                    trip_id: trip.trip_id,
-                    driver_id: trip.driver_id,
-                    client_id: trip.client_id,
-                    orig_pos_lat: trip.orig_pos_lat,
-                    orig_pos_long: trip.orig_pos_long,
-                    dest_pos_lat: trip.dest_pos_lat,
-                    dest_pos_long: trip.dest_pos_long,
-                    score : trip.score,
-                    date: trip.date,
-                    charged: trip.charged,
-                    paid_out: trip.paid_out
-                })
-            });
+          const { rows } = await db.db.query(query, [trip])
+          rows.forEach(trip => {
+            trips.push({
+              trip_id: trip.trip_id,
+              driver_id: trip.driver_id,
+              client_id: trip.client_id,
+              orig_pos_lat: trip.orig_pos_lat,
+              orig_pos_long: trip.orig_pos_long,
+              dest_pos_lat: trip.dest_pos_lat,
+              dest_pos_long: trip.dest_pos_long,
+              score : trip.score,
+              date: trip.date,
+              charged: trip.charged,
+              paid_out: trip.paid_out
+            })
+          })
         })
 
       return res.status(200).json(trips)
@@ -121,7 +123,37 @@ const Database = {
       console.log(error)
       return res.status(400).json({ error: error })
     }
+  },
+  
+  async score(req, res) {
+    let query = `UPDATE trip SET score = $1 WHERE trip_id = $2 AND client_id = $3 returning *`
+    let values = [req.body.score, req.body.trip_id, req.params.clientID]
+
+    try {
+      const response = await db.db.query(query, values)
+      if (response.severity == 'ERROR') {
+        console.log(response)
+        throw "database error"
+      }
+      
+      return res.status(200).json({
+        trip_id: response.rows[0].trip_id,
+        driver_id: response.rows[0].driver_id,
+        client_id: response.rows[0].client_id,
+        orig_pos_lat: response.rows[0].orig_pos_lat,
+        orig_pos_long: response.rows[0].orig_pos_long,
+        dest_pos_lat: response.rows[0].dest_pos_lat,
+        dest_pos_long: response.rows[0].dest_pos_long,
+        score : response.rows[0].score,
+        date: response.rows[0].date,
+        charged: response.rows[0].charged,
+        paid_out: response.rows[0].paid_out
+      })
+    } catch (error) {
+      console.log(error)
+      return res.status(400).json({ error: error })
+    }
   }
 }
 
-module.exports.Database  = Database;
+module.exports.Database  = Database

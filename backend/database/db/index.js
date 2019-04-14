@@ -1,7 +1,7 @@
 
-var { Pool } = require('pg');
-var dotenv = require('dotenv');
-dotenv.config();
+var { Pool } = require('pg')
+var dotenv = require('dotenv')
+dotenv.config()
 
 const pool = new Pool({
   user: 'postgres',
@@ -15,19 +15,13 @@ pool.connect()
 module.exports.pool = pool
 
 module.exports.db = {
-  /**
-   * DB Query
-   * @param {object} req
-   * @param {object} res
-   * @returns {object} object 
-   */
   query(text, params){
-      return pool.query(text, params)
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        return err;
-      })
+    return pool.query(text, params)
+    .then((res) => {
+      return res
+    })
+    .catch((err) => {
+      return err
+    })
   }
 }
