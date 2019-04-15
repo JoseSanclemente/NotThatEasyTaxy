@@ -5,11 +5,12 @@ Proyecto de Bases de Datos
 ## ¡Atención!
 
 Esta aplicación se encuentra aún en desarrollo. Las funcionalidades disponibles son limitadas debido a que no se ha implementado una conexión entre el Frontend y el Backend. Podrá ingresar a la plataforma
-usando los valores de ejemplo de este documento. Toda la información mostrada en la página es meramente ilustrativa y tiene como finalidad proporcionar un ejemplo de cómo se verá el servicio web en producción. Para conocer las funcionalidades disponibles, consulte el Manual de Usuario. Recuerde que puede explorar toda la plafatorma sin necesidad de inicializar la
-base de datos, no requerirá usuario ni contraseña.
+usando los valores de ejemplo de este documento. Toda la información mostrada en la página es meramente ilustrativa y tiene como finalidad proporcionar un ejemplo de cómo se verá el servicio web en producción. Para conocer las funcionalidades disponibles, consulte el Manual de Usuario.
 
 La API utilizada para la comunicación entre el Frontend y el Backend se encuentra totalmente
 en funcionamiento. Consulte la documentación para saber cómo utilizarla.
+
+Recuerde que puede explorar toda la plafatorma sin necesidad de inicializar la base de datos, no requerirá usuario ni contraseña.
 
 ## Inicializar la Base de datos
 
