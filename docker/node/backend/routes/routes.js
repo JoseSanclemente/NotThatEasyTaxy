@@ -5,6 +5,7 @@ const client = require("./client.js")
 var appRouter = function (app) {
   app.get("/api/driver/:driverID/login", driver.loginDriver)
   app.post("/api/driver/:driverID", driver.createDriver)
+  app.post("/api/driver", driver.signUpDriver)
   app.get("/api/driver/:driverID", driver.getDriver)
   app.put("/api/driver/:driverID", driver.updateDriver)
   app.post("/api/driver/:driverID/changeStatus", driver.changeDriverStatus)

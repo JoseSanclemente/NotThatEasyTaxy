@@ -30,7 +30,8 @@ CREATE TABLE active_driver
 CREATE TABLE driver_login
 (
     driver_id VARCHAR(10) REFERENCES driver(driver_id),
-    password VARCHAR(50) NOT NULL
+    password VARCHAR(50) NOT NULL,
+    PRIMARY KEY (driver_id)
 );
 
 CREATE TABLE client
@@ -53,7 +54,8 @@ CREATE TABLE place
 CREATE TABLE client_login
 (
     client_id VARCHAR(12) REFERENCES client(client_id),
-    password VARCHAR(50) NOT NULL
+    password VARCHAR(50) NOT NULL,
+    PRIMARY KEY (client_id)
 );
 
 CREATE TABLE available_trips
@@ -121,3 +123,27 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER take_trip_trigger
 BEFORE insert ON trip
 FOR EACH ROW EXECUTE PROCEDURE take_trip();
+
+CREATE OR REPLACE FUNCTION create_driver(in_taxi_id VARCHAR, in_model VARCHAR, in_year INT, in_soat VARCHAR, in_trunk BOOLEAN, in_brand VARCHAR, in_driver_id VARCHAR, in_name VARCHAR, in_birth_date DATE) RETURNS VOID AS $$
+DECLARE
+	ref refcursor;
+BEGIN
+	IF NOT EXISTS (SELECT * FROM taxi WHERE taxi_id = in_taxi_id) THEN
+		INSERT INTO taxi(taxi_id, model, year, soat, trunk, brand) VALUES(in_taxi_id, in_model, in_year, in_soat, in_trunk, in_brand);
+		INSERT INTO driver(driver_id, taxi_id, name, birth_date) VALUES(in_driver_id, in_taxi_id, in_name, in_birth_date);
+		RETURN;
+	END IF;
+	INSERT INTO driver(driver_id, taxi_id, name, birth_date) VALUES(in_driver_id, in_taxi_id, in_name, in_birth_date);
+	RETURN;
+	
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION create_user(in_client_id VARCHAR, in_name VARCHAR, in_credit_card VARCHAR, in_password VARCHAR) RETURNS VOID AS $$
+BEGIN
+	INSERT INTO client(client_id, name, credit_card) VALUES(in_client_id, in_name, in_credit_card);
+	INSERT INTO client_login(client_id, password) VALUES(in_client_id, in_password);
+	RETURN;
+	
+END;
+$$ LANGUAGE plpgsql;

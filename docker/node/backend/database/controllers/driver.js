@@ -63,6 +63,31 @@ const Database = {
     }
   },
 
+  async signUp(req, res) {
+    const text = 'SELECT * FROM create_driver('
+      + "\'" + req.body.taxi_id + "\'"  + ', '
+      + "\'" + req.body.model + "\'"  + ', '
+      + req.body.year  + ', '
+      + "\'" + req.body.soat + "\'"  + ', '
+      + req.body.trunk + ', '
+      + "\'" + req.body.brand + "\'" + ', '
+      + "\'" + req.body.driver_id + "\'"  + ', '
+      + "\'" + req.body.name + "\'"  + ', '
+      + "\'" + req.body.birth_date + "\'"  +');'
+    try {
+      let response = await db.db.query(text);
+      if (response.severity == 'ERROR') {
+        console.log("throw")
+        throw "database error"
+      }
+      console.log("all ok")
+    } catch(error) {
+      ("something went wrong")
+      console.log(error)
+      return res.status(400).json({error: error})
+    }
+  },
+
   async update(req, res) {
     const findOneQuery = 'SELECT * FROM driver WHERE driver_id=$1'
     const updateOneQuery =`UPDATE driver
