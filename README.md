@@ -11,8 +11,8 @@ Proyecto de Bases de Datos
 
 ## Inicializar la plataforma
 
-1.Ejecutar `npm install` en /NotThatEasyTaxi/newclient
-2.Ejectar `npm run dev` en /NotThatEasyTaxi/newclient
+1. Ejecutar `npm install` en /NotThatEasyTaxi/newclient
+2. Ejectar `npm run dev` en /NotThatEasyTaxi/newclient
 
 ## Datos de prueba
 
