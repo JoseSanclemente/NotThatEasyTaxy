@@ -60,7 +60,7 @@
       <md-field class="md-form-group" slot="inputs" v-if="isDriver">
         <md-icon>directions_car</md-icon>
         <label>Baul</label>
-        <md-input v-model="baul"></md-input>
+        <md-input v-model="trunk"></md-input>
       </md-field>
 
       <md-field class="md-form-group" slot="inputs" v-if="isDriver">
@@ -110,17 +110,30 @@ export default {
       model: "",
       year: "",
       soat: "",
-      baul: "",
+      trunk: "",
       brand: "",
       creditCard: ""
     };
   },
   methods: {
     signIn: function() {
+      console.log("hi")
       superagent
-        .get("http://localhost:8080/api/" + this.type + "/" + this.id)
-        .set("password", this.password)
+        .post("http://localhost:8080/api/" + this.type)
+        .send({
+          taxi_id: this.taxiPlate,
+          model: this.model,
+          year: parseInt(this.year, 10),
+          soat: this.soat,
+          trunk: this.trunk,
+          brand: this.brand,
+          driver_id: this.id,
+          name: this.name,
+          birth_date: this.birthDate
+        })
         .end((err, res) => {
+          console.log(err)
+          console.log(res)
           if (err != null) {
             return;
             //TODO: Notify error in conection
@@ -156,6 +169,11 @@ export default {
 #main-container {
   min-width: 100%;
   min-height: 100%;
+  overflow: scroll;
+
+}
+::-webkit-scrollbar { 
+    display: none !important; 
 }
 #login-button {
   align-content: center;

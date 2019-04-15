@@ -11,6 +11,10 @@ module.exports.createDriver = (req, res) => {
   return driver.Database.create(req, res)
 }
 
+module.exports.signUpDriver = (req, res) => {
+  return driver.Database.signUp(req, res)
+}
+
 module.exports.getDriver = (req, res) => {
   return driver.Database.get(req, res)
 }
