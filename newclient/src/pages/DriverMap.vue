@@ -13,11 +13,11 @@
         :labels="{ checked: 'Activo', unchecked: 'Inactivo' }"
       />
       <md-button
-        title="Listo"
+        title="Empezar Turno"
         class="md-warning-icon"
         @click="handleStartButton()"
       >
-        <md-icon class="md-size-3x">check_circle_outline</md-icon>
+        <md-icon>check_circle_outline</md-icon>
       </md-button>
     </div>
     <div id="map"></div>
@@ -48,7 +48,23 @@ export default {
   },
   methods: {
     handleStartButton() {
-      console.log("Working!");
+      if (this.startLocation != null) {
+        this.$notify({
+          message: "¡Su turno ha sido activo!",
+          icon: "notification_important",
+          horizontalAlign: "center",
+          verticalAlign: "top",
+          type: "success"
+        });
+      } else {
+        this.$notify({
+          message: "Activar su turno y seleccionar un punto de partida",
+          icon: "notification_important",
+          horizontalAlign: "center",
+          verticalAlign: "top",
+          type: "danger"
+        });
+      }
     },
     initMap(google) {
       var userCoords;
@@ -97,7 +113,14 @@ export default {
               });
             }
           } else {
-            alert("Para empezar debe cambiarse a Activo");
+            _this.$notify({
+              message:
+                "Para seleccionar un punto de partida, debe activar su turno primero",
+              icon: "notification_important",
+              horizontalAlign: "center",
+              verticalAlign: "top",
+              type: "danger"
+            });
           }
         });
       });
