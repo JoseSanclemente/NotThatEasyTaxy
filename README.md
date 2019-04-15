@@ -4,10 +4,10 @@ Proyecto de Bases de Datos
 
 # Inicializar la Base de datos
 
-1 - Ejecutar el comando 'docker -t database' en NotThatEasyTaxi/docker/postgresql
-2 - Ejecutar 'sudo docker run -it --name database_container database' en la misma carpeta
-3 - Ejecutar 'sudo docker -t server' en NotThatEasyTaxi/docker/node
-4 - Ejecutar 'sudo docker run --name server_container --link database_container:database -p 8080:8080 server' en la misma carpeta.
+1. Ejecutar el comando 'docker -t database' en NotThatEasyTaxi/docker/postgresql
+2. Ejecutar 'sudo docker run -it --name database_container database' en la misma carpeta
+3. Ejecutar 'sudo docker -t server' en NotThatEasyTaxi/docker/node
+4. Ejecutar 'sudo docker run --name server_container --link database_container:database -p 8080:8080 server' en la misma carpeta.
 
 # Inicializar la plataforma
 
