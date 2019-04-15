@@ -16,13 +16,13 @@ Proyecto de Bases de Datos
 
 ## Datos de prueba
 
-- Conductor:
-  Cédula: 987654321
-  Contraseña: abc
+Conductor:
+  * Cédula: 987654321
+  * Contraseña: abc
 
-- Pasajero:
-  Número de teléfono: 571112223344
-  Contraseña: abc
+Pasajero:
+  * Número de teléfono: 571112223344
+  * Contraseña: abc
 
 ## ¡Atención!
 
