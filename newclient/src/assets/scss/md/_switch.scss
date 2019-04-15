@@ -1,0 +1,50 @@
+.md-switch {
+  border-radius: 52px 52px 52px 52px;
+  -moz-border-radius: 52px 52px 52px 52px;
+  -webkit-border-radius: 52px 52px 52px 52px;
+  border: 0px solid #000000;
+
+  -webkit-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.28);
+  -moz-box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.28);
+  box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.28);
+
+  background: rgba(255, 167, 38, 1);
+  background: -moz-linear-gradient(
+    left,
+    rgba(255, 167, 38, 1) 0%,
+    rgba(255, 167, 38, 1) 30%,
+    rgba(245, 124, 0, 1) 100%
+  );
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(255, 167, 38, 1)),
+    color-stop(30%, rgba(255, 167, 38, 1)),
+    color-stop(100%, rgba(245, 124, 0, 1))
+  );
+  background: -webkit-linear-gradient(
+    left,
+    rgba(255, 167, 38, 1) 0%,
+    rgba(255, 167, 38, 1) 30%,
+    rgba(245, 124, 0, 1) 100%
+  );
+  background: -o-linear-gradient(
+    left,
+    rgba(255, 167, 38, 1) 0%,
+    rgba(255, 167, 38, 1) 30%,
+    rgba(245, 124, 0, 1) 100%
+  );
+  background: -ms-linear-gradient(
+    left,
+    rgba(255, 167, 38, 1) 0%,
+    rgba(255, 167, 38, 1) 30%,
+    rgba(245, 124, 0, 1) 100%
+  );
+  background: linear-gradient(
+    to right,
+    rgba(255, 167, 38, 1) 0%,
+    rgba(255, 167, 38, 1) 30%,
+    rgba(245, 124, 0, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa726', endColorstr='#f57c00', GradientType=1 );
+}

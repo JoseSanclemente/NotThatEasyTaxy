@@ -21,7 +21,7 @@
       <md-button
         title="Realizar viaje"
         class="md-info-icon"
-        @click="handleDoTripButton"
+        @click="handleDoTripButton()"
       >
         <md-icon>local_taxi</md-icon>
       </md-button>

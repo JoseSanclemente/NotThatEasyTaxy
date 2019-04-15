@@ -2,15 +2,23 @@
   <div>
     <div id="floating-panel-buttons">
       <toggle-button
+        class="md-switch md-lg"
         :width="150"
         :height="52"
         :font-size="20"
         :value="false"
         @change="isActive = !isActive"
-        color="#1ad85f"
+        :css-colors="true"
         :sync="true"
         :labels="{ checked: 'Activo', unchecked: 'Inactivo' }"
       />
+      <md-button
+        title="Listo"
+        class="md-warning-icon"
+        @click="handleStartButton()"
+      >
+        <md-icon class="md-size-3x">check_circle_outline</md-icon>
+      </md-button>
     </div>
     <div id="map"></div>
   </div>
@@ -20,30 +28,11 @@
   position: absolute;
   width: 150px;
   height: 80px;
-  top: 150px;
+  top: 200px;
   left: 2%;
   z-index: 5;
   background-color: transparent;
   border: none;
-}
-
-#floating-panel-info {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: 500px;
-  left: 25%;
-  z-index: 5;
-  background-color: transparent;
-  border: none;
-}
-
-#information-card {
-  position: absolute;
-  width: 500px;
-  left: 25%;
-  z-index: 5;
-  background-color: transparent;
 }
 </style>
 
@@ -58,6 +47,9 @@ export default {
     };
   },
   methods: {
+    handleStartButton() {
+      console.log("Working!");
+    },
     initMap(google) {
       var userCoords;
       let _this = this;

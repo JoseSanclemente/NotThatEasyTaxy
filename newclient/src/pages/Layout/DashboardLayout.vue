@@ -12,21 +12,13 @@
         <md-icon>location_on</md-icon>
         <p>Viajar</p>
       </sidebar-link>
-      <sidebar-link to="/client/profile">
-        <md-icon>person</md-icon>
-        <p>User Profile</p>
+      <sidebar-link to="/driver/dashboard" v-if="isDriver()">
+        <md-icon>dashboard</md-icon>
+        <p>Dashboard</p>
       </sidebar-link>
-      <sidebar-link to="/table">
-        <md-icon>content_paste</md-icon>
-        <p>Table list</p>
-      </sidebar-link>
-      <sidebar-link to="/typography">
-        <md-icon>library_books</md-icon>
-        <p>Typography</p>
-      </sidebar-link>
-      <sidebar-link to="/icons">
-        <md-icon>bubble_chart</md-icon>
-        <p>Icons</p>
+      <sidebar-link to="/driver/map" v-if="isDriver()">
+        <md-icon>local_taxi</md-icon>
+        <p>Turno</p>
       </sidebar-link>
     </side-bar>
     <div class="main-panel">
