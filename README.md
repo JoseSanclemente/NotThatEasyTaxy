@@ -35,10 +35,10 @@ Pasajero:
 ## Tecnologías utilizadas
 
 - NodeJS
-- Vue (Anteriormente React)
+- Vue (anteriormente React)
 - Google Maps API
 - Docker
 - PostgreSQL
 - Material UI
-- Creative Tim Template
+- Creative Tim Vue Dashboard
 - GitHub
