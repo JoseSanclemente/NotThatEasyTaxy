@@ -78,6 +78,10 @@ export default {
 #main-container {
   min-width: 100%;
   min-height: 100%;
+  overflow: scroll;
+}
+::-webkit-scrollbar { 
+    display: none !important; 
 }
 #login-button {
   align-content: center;
