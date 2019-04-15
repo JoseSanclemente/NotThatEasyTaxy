@@ -8,7 +8,7 @@ Esta aplicación se encuentra aún en desarrollo. Las funcionalidades disponible
 usando los valores de ejemplo de este documento. Toda la información mostrada en la página es meramente ilustrativa y tiene como finalidad proporcionar un ejemplo de cómo se verá el servicio web en producción. Para conocer las funcionalidades disponibles, consulte el Manual de Usuario.
 
 La API utilizada para la comunicación entre el Frontend y el Backend se encuentra totalmente
-en funcionamiento. Consulte la documentación de la API para saber cómo utilizarla.
+en funcionamiento. Consulte la documentación para saber cómo utilizarla.
 
 ## Inicializar la Base de datos
 
