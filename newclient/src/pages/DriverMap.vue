@@ -58,7 +58,8 @@ export default {
         });
       } else {
         this.$notify({
-          message: "Activar su turno y seleccionar un punto de partida",
+          message:
+            "Debe activar su turno y seleccionar un punto de partida para comenzar",
           icon: "notification_important",
           horizontalAlign: "center",
           verticalAlign: "top",
@@ -101,12 +102,12 @@ export default {
               e.latLng.lat(),
               e.latLng.lng()
             );
-            if (this.startLocation != null) {
-              this.startLocation.setMap(null);
-              this.startLocation.setPosition(destinationCoords);
-              this.startLocation.setMap(map);
+            if (_this.startLocation != null) {
+              _this.startLocation.setMap(null);
+              _this.startLocation.setPosition(destinationCoords);
+              _this.startLocation.setMap(map);
             } else {
-              this.startLocation = new google.maps.Marker({
+              _this.startLocation = new google.maps.Marker({
                 position: destinationCoords,
                 map: map,
                 title: "Punto de partida"

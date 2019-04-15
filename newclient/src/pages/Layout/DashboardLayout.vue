@@ -6,7 +6,7 @@
       <mobile-menu slot="content"></mobile-menu>
       <sidebar-link to="/client/dashboard" v-if="isUser()">
         <md-icon>dashboard</md-icon>
-        <p>Dashboard</p>
+        <p>Mis Viajes</p>
       </sidebar-link>
       <sidebar-link to="/client/map" v-if="isUser()">
         <md-icon>location_on</md-icon>
@@ -14,7 +14,7 @@
       </sidebar-link>
       <sidebar-link to="/driver/dashboard" v-if="isDriver()">
         <md-icon>dashboard</md-icon>
-        <p>Dashboard</p>
+        <p>Historial</p>
       </sidebar-link>
       <sidebar-link to="/driver/map" v-if="isDriver()">
         <md-icon>local_taxi</md-icon>
