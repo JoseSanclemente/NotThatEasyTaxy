@@ -2,6 +2,7 @@ import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
 import Maps from "@/pages/Maps.vue";
 import Dashboard from "@/pages/Dashboard.vue";
+import DriverMap from "@/pages/DriverMap.vue";
 /*import UserProfile from "@/pages/UserProfile.vue";
 import TableList from "@/pages/TableList.vue";
 import Typography from "@/pages/Typography.vue";
@@ -57,7 +58,16 @@ const routes = [
   {
     path: "/driver",
     component: DashboardLayout,
-    children: []
+    children: [
+      {
+        path: "/driver/map",
+        name: "DriverMap",
+        meta: {
+          hideFooter: true
+        },
+        component: DriverMap
+      }
+    ]
   }
   /* {
     path: "/",

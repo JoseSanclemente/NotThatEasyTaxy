@@ -1,0 +1,1122 @@
+openapi: 3.0.2
+info:
+    title: No that easy taxi
+    description: This isn't that easy taxi
+    version: 1.0.0
+paths:
+    '/api/driver/{driverID}':
+        get:
+            tags:
+                - Driver
+            summary: Get driver
+            description: 'GET /api/driver/{driverID}'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/driverOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        put:
+            tags:
+                - Driver
+            summary: Modify driver
+            description: 'PUT /api/driver/{driverID}'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/driverInput'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/driverOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        post:
+            tags:
+                - Driver
+            summary: Create driver
+            description: 'POST /api/driver/{driverID}'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/driverInput'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/driverOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: driverID
+                in: path
+                description: ID of the driver
+                required: true
+                schema:
+                    type: string
+    '/api/driver/{driverID}/changeStatus':
+        post:
+            tags:
+                - Driver
+            summary: Change driver status
+            description: 'POST /api/driver/{driverID}/changeStatus'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/changeStatusInput'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/changeStatusOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: driverID
+                in: path
+                description: ID of the driver
+                required: true
+                schema:
+                    type: string
+    '/api/driver/{driverID}/getPendingTrips':
+        get:
+            tags:
+                - Driver
+            summary: Get driver available trips
+            description: 'GET /api/driver/{driverID}/getPendingTrips'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/availableTrip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: driverID
+                in: path
+                description: ID of the driver
+                required: true
+                schema:
+                    type: string
+    '/api/driver/{driverID}/doTrip':
+        post:
+            tags:
+                - Driver
+            summary: Do trip
+            description: 'POST /api/driver/{driverID}/doTrip'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/driverTripInput'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/trip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: driverID
+                in: path
+                description: ID of the driver
+                required: true
+                schema:
+                    type: string
+    '/api/taxi/{taxiID}':
+        get:
+            tags:
+                - Taxi
+            summary: Get taxi
+            description: 'GET /api/taxi/{taxiID}'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/taxiOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        put:
+            tags:
+                - Taxi
+            summary: Modify taxi
+            description: 'PUT /api/taxi/{taxiID}'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/taxiInput'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/taxiOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        post:
+            tags:
+                - Taxi
+            summary: Create taxi
+            description: 'POST /api/taxi/{taxiID}'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/taxiInput'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/taxiOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: taxiID
+                in: path
+                description: ID of the taxi
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/login':
+        summary: Client login
+        description: ''
+        get:
+            tags:
+                - Client
+            summary: Client login
+            description: 'GET /api/client/{clientID}/login'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/message'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: key
+                in: header
+                description: Client password
+                required: true
+                schema:
+                    type: string
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}':
+        get:
+            tags:
+                - Client
+            summary: Get client
+            description: 'GET /api/client/{clientID}'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/clientOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        put:
+            tags:
+                - Client
+            summary: Modify client
+            description: 'PUT /api/client/{clientID}'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/clientModify'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/clientOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        post:
+            tags:
+                - Client
+            summary: Create client
+            description: 'POST /api/client/{clientID}'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/clientInput'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/clientOutput'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/getTrips':
+        get:
+            tags:
+                - Client
+            summary: Get client unpaid trips
+            description: 'GET /api/client/{clientID}/getTrips'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/trip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/payTrips':
+        post:
+            tags:
+                - Client
+            summary: Pay client trips
+            description: 'POST /api/client/{clientID}/payTrips'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/modifyTrips'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/trip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/getNearbyDrivers':
+        get:
+            tags:
+                - Client
+            summary: Get near drivers
+            description: 'GET /api/client/{clientID}/getNearbyDrivers'
+            parameters:
+                -
+                    name: pos_lat
+                    in: query
+                    required: true
+                    schema:
+                        format: float
+                        type: number
+                -
+                    name: pos_long
+                    in: query
+                    required: true
+                    schema:
+                        format: float
+                        type: number
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/nearDriver'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/doTrip':
+        post:
+            tags:
+                - Client
+            summary: Request trip
+            description: 'POST /api/client/{clientID}/doTrip'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/clientTripInput'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/availableTrip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/checkCurrentTrip':
+        get:
+            tags:
+                - Client
+            summary: Check client current trip
+            description: 'GET /api/client/{clientID}/checkCurrentTrip'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/messagePending'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/scoreTrip':
+        post:
+            tags:
+                - Client
+            summary: Score a trip
+            description: 'POST /api/client/{clientID}/scoreTrip'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/scoreTrip'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/trip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/getPlaces':
+        get:
+            tags:
+                - Client
+            summary: Get client favorite places
+            description: 'GET /api/client/{clientID}/getPlaces'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/place'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/addPlace':
+        post:
+            tags:
+                - Client
+            summary: Add favorite place
+            description: 'POST /api/client/{clientID}/addPlace'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/placeInput'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/place'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/client/{clientID}/removePlace':
+        delete:
+            tags:
+                - Client
+            summary: Remove favorite place
+            description: 'DELETE /api/client/{clientID}/removePlace'
+            parameters:
+                -
+                    name: name
+                    in: query
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/message'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: clientID
+                in: path
+                description: ID of the client
+                required: true
+                schema:
+                    type: string
+    '/api/driver/{driverID}/login':
+        summary: Driver login
+        get:
+            tags:
+                - Driver
+            summary: Driver login
+            description: 'GET /api/driver/{driverID}/login'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/message'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: key
+                in: header
+                description: Driver password
+                required: true
+                schema:
+                    type: string
+            -
+                name: driverID
+                in: path
+                description: ID of the driver
+                required: true
+                schema:
+                    type: string
+    '/api/driver/{driverID}/chargeTrips':
+        post:
+            tags:
+                - Driver
+            summary: Pay driver trips
+            description: 'POST /api/driver/{driverID}/chargeTrips'
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/modifyTrips'
+                required: true
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/trip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: driverID
+                in: path
+                description: ID of the driver
+                required: true
+                schema:
+                    type: string
+    '/api/driver/{driverID}/getTrips':
+        get:
+            tags:
+                - Driver
+            summary: Get driver unpaid trips
+            description: 'GET /api/driver/{driverID}/getTrips'
+            responses:
+                '200':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/trip'
+                '400':
+                    description: ''
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/error'
+        parameters:
+            -
+                name: driverID
+                in: path
+                description: ID of the driver
+                required: true
+                schema:
+                    type: string
+components:
+    schemas:
+        clientOutput:
+            required:
+                - client_id
+                - name
+                - credit_card
+            type: object
+            properties:
+                client_id:
+                    type: string
+                name:
+                    type: string
+                credit_card:
+                    type: string
+        driverInput:
+            required:
+                - taxi_id
+                - name
+                - birth_date
+            type: object
+            properties:
+                taxi_id:
+                    type: string
+                name:
+                    type: string
+                birth_date:
+                    type: string
+        taxiInput:
+            required:
+                - model
+                - year
+                - soat
+                - trunk
+                - brand
+            type: object
+            properties:
+                model:
+                    type: string
+                year:
+                    type: integer
+                soat:
+                    type: string
+                trunk:
+                    type: boolean
+                brand:
+                    type: string
+        error:
+            type: object
+            properties:
+                error:
+                    type: string
+        driverOutput:
+            required:
+                - driver_id
+                - taxi_id
+                - name
+                - birth_date
+            type: object
+            properties:
+                driver_id:
+                    type: string
+                taxi_id:
+                    type: string
+                name:
+                    type: string
+                birth_date:
+                    type: string
+        taxiOutput:
+            required:
+                - taxi_id
+                - model
+                - year
+                - soat
+                - trunk
+                - brand
+            type: object
+            properties:
+                taxi_id:
+                    type: string
+                model:
+                    type: string
+                year:
+                    type: integer
+                soat:
+                    type: string
+                trunk:
+                    type: boolean
+                brand:
+                    type: string
+        message:
+            required:
+                - message
+            type: object
+            properties:
+                message:
+                    type: string
+        clientModify:
+            type: object
+            properties:
+                name:
+                    type: string
+                credit_card:
+                    type: string
+        clientInput:
+            required:
+                - name
+                - credit_card
+            type: object
+            properties:
+                name:
+                    type: string
+                credit_card:
+                    type: string
+        place:
+            required:
+                - name
+                - client_id
+                - pos_lat
+                - pos_long
+            type: object
+            properties:
+                name:
+                    type: string
+                client_id:
+                    type: string
+                pos_lat:
+                    format: float
+                    type: number
+                pos_long:
+                    format: float
+                    type: number
+        placeInput:
+            required:
+                - name
+                - pos_lat
+                - pos_long
+            type: object
+            properties:
+                name:
+                    type: string
+                pos_lat:
+                    format: float
+                    type: number
+                pos_long:
+                    format: float
+                    type: number
+        placeRemove:
+            required:
+                - name
+            type: object
+            properties:
+                name:
+                    type: string
+        messagePending:
+            required:
+                - message
+                - pending
+            type: object
+            properties:
+                message:
+                    enum:
+                        - ok
+                        - pending
+                pending:
+                    type: boolean
+        availableTrip:
+            required:
+                - client_id
+                - driver_id
+                - orig_pos_lat
+                - orig_pos_long
+                - dest_pos_lat
+                - dest_pos_long
+            type: object
+            properties:
+                client_id:
+                    type: string
+                driver_id:
+                    type: string
+                orig_pos_lat:
+                    format: float
+                    type: number
+                orig_pos_long:
+                    format: float
+                    type: number
+                dest_pos_lat:
+                    format: float
+                    type: number
+                dest_pos_long:
+                    format: float
+                    type: number
+        clientTripInput:
+            required:
+                - drivers
+                - orig_pos_lat
+                - orig_pos_long
+                - dest_pos_lat
+                - dest_pos_long
+            type: object
+            properties:
+                drivers:
+                    description: ID of the drivers
+                    type: array
+                    items:
+                        type: string
+                orig_pos_lat:
+                    format: float
+                    type: number
+                orig_pos_long:
+                    format: float
+                    type: number
+                dest_pos_lat:
+                    format: float
+                    type: number
+                dest_pos_long:
+                    format: float
+                    type: number
+        nearDriver:
+            required:
+                - driver_id
+                - pos_lat
+                - pos_long
+                - score
+            type: object
+            properties:
+                driver_id:
+                    type: string
+                pos_lat:
+                    format: float
+                    type: number
+                pos_long:
+                    format: float
+                    type: number
+                score:
+                    format: float
+                    type: number
+        trip:
+            required:
+                - trip_id
+                - driver_id
+                - client_id
+                - orig_pos_lat
+                - orig_pos_long
+                - dest_pos_lat
+                - dest_pos_long
+                - score
+                - date
+                - charged
+                - paid_out
+                - date
+                - charged
+            type: object
+            properties:
+                trip_id:
+                    type: string
+                driver_id:
+                    type: string
+                client_id:
+                    type: string
+                orig_pos_lat:
+                    format: float
+                    type: number
+                orig_pos_long:
+                    format: float
+                    type: number
+                dest_pos_lat:
+                    format: float
+                    type: number
+                dest_pos_long:
+                    format: float
+                    type: number
+                score:
+                    format: float
+                    type: number
+                date:
+                    type: string
+                charged:
+                    type: boolean
+                paid_out:
+                    type: boolean
+        modifyTrips:
+            required:
+                - trips
+            type: object
+            properties:
+                trips:
+                    description: ID of the trips
+                    type: array
+                    items:
+                        type: string
+        scoreTrip:
+            required:
+                - trip_id
+                - score
+            type: object
+            properties:
+                trip_id:
+                    type: string
+                score:
+                    format: float
+                    type: number
+        changeStatusInput:
+            required:
+                - status
+            type: object
+            properties:
+                status:
+                    type: boolean
+                taxi_id:
+                    type: string
+                pos_lat:
+                    format: float
+                    type: number
+                pos_long:
+                    format: float
+                    type: number
+        changeStatusOutput:
+            required:
+                - driver_id
+                - taxi_id
+                - pos_lat
+                - pos_long
+            type: object
+            properties:
+                driver_id:
+                    type: string
+                taxi_id:
+                    type: string
+                pos_lat:
+                    format: float
+                    type: number
+                pos_long:
+                    format: float
+                    type: number
+        driverTripInput:
+            required:
+                - client_id
+                - orig_pos_lat
+                - orig_pos_long
+                - dest_pos_lat
+                - dest_pos_long
+            type: object
+            properties:
+                client_id:
+                    type: string
+                orig_pos_lat:
+                    format: float
+                    type: number
+                orig_pos_long:
+                    format: float
+                    type: number
+                dest_pos_lat:
+                    format: float
+                    type: number
+                dest_pos_long:
+                    format: float
+                    type: number
+tags:
+    -
+        name: Client
+    -
+        name: Driver
+    -
+        name: Taxi

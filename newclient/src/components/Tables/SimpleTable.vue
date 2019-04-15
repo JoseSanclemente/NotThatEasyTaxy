@@ -1,11 +1,10 @@
 <template>
   <div>
-    <md-table v-model="users" :table-header-color="tableHeaderColor">
+    <md-table v-model="trips" :table-header-color="tableHeaderColor">
       <md-table-row slot="md-table-row" slot-scope="{ item }">
-        <md-table-cell md-label="Name">{{ item.name }}</md-table-cell>
-        <md-table-cell md-label="Country">{{ item.country }}</md-table-cell>
-        <md-table-cell md-label="City">{{ item.city }}</md-table-cell>
-        <md-table-cell md-label="Salary">{{ item.salary }}</md-table-cell>
+        <md-table-cell md-label="ID">{{ item.id }}</md-table-cell>
+        <md-table-cell md-label="Fecha de viaje">{{ item.date }}</md-table-cell>
+        <md-table-cell md-label="Valor pagado">{{ item.cost }}</md-table-cell>
       </md-table-row>
     </md-table>
   </div>
@@ -23,42 +22,21 @@ export default {
   data() {
     return {
       selected: [],
-      users: [
+      trips: [
         {
-          name: "Dakota Rice",
-          salary: "$36,738",
-          country: "Niger",
-          city: "Oud-Turnhout"
+          id: "37438920",
+          cost: "$36,738",
+          date: "11/04/2019"
         },
         {
-          name: "Minerva Hooper",
-          salary: "$23,738",
-          country: "Curaçao",
-          city: "Sinaai-Waas"
+          id: "89542416",
+          cost: "$23,738",
+          date: "10/04/2019"
         },
         {
-          name: "Sage Rodriguez",
-          salary: "$56,142",
-          country: "Netherlands",
-          city: "Overland Park"
-        },
-        {
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Gloucester"
-        },
-        {
-          name: "Doris Greene",
-          salary: "$63,542",
-          country: "Malawi",
-          city: "Feldkirchen in Kārnten"
-        },
-        {
-          name: "Mason Porter",
-          salary: "$78,615",
-          country: "Chile",
-          city: "Gloucester"
+          id: "94174322",
+          cost: "$56,142",
+          date: "05/04/2019"
         }
       ]
     };

@@ -47,8 +47,7 @@ import MobileMenu from "@/pages/Layout/MobileMenu.vue";
 
 export default {
   data: function() {
-    return {
-    };
+    return {};
   },
   components: {
     TopNavbar,
@@ -58,11 +57,11 @@ export default {
   },
   methods: {
     isUser: function() {
-      return this.$route.path.includes("client")
+      return this.$route.path.includes("client");
     },
 
     isDriver: function() {
-      return this.$route.path.includes("driver")
+      return this.$route.path.includes("driver");
     }
   }
 };
