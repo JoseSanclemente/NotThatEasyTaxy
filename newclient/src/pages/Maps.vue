@@ -85,7 +85,6 @@
 <script>
 import GoogleMapsLoader from "google-maps";
 import { StatsCard } from "@/components";
-import superagent from "superagent";
 
 export default {
   components: {
