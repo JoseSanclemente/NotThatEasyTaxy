@@ -21,21 +21,21 @@
       <md-button
         title="Realizar viaje"
         class="md-info-icon"
-        @click="handleDoTripButton"
+        @click="handleDoTripButton()"
       >
         <md-icon>local_taxi</md-icon>
       </md-button>
     </div>
     <div id="floating-panel-info">
       <div id="information-card">
-        <stats-card data-background-color="green">
+        <stats-card data-background-color="orange">
           <template slot="header">
             <md-icon>info_outline</md-icon>
           </template>
 
           <template slot="content">
             <p class="category">Precio</p>
-            <h3 class="title">$ {{ travelCost }}</h3>
+            <h3 class="title">COP {{ travelCost }}</h3>
           </template>
 
           <template slot="footer">
@@ -99,6 +99,7 @@ export default {
         directionsService: null,
         directionsDisplay: null
       },
+      id: 0,
       locationName: "",
       favLocations: [
         { lat: 3.4372201, lng: -76.5224991, name: "Mi Casa" },
@@ -113,7 +114,7 @@ export default {
   methods: {
     calculateTravelInformation(distance, duration) {
       var totalCost = 4000 + (distance / 1000) * 300;
-      this.travelCost = totalCost;
+      this.travelCost = Math.round(totalCost);
       this.travelDuration = duration;
     },
     calculateRoute(endMarker) {
@@ -139,7 +140,13 @@ export default {
       if (this.googleAPI.destinationMarker != null) {
         this.showInputName = true;
       } else {
-        alert("Selecciona una ubicación");
+        this.$notify({
+          message: "Seleccione un lugar de llegada",
+          icon: "notification_important",
+          horizontalAlign: "center",
+          verticalAlign: "top",
+          type: "danger"
+        });
       }
     },
     addMarkerToFavorites() {
@@ -187,6 +194,7 @@ export default {
         map: _this.googleAPI.map
       });
       google.maps.event.addListener(marker, "click", function() {
+        _this.googleAPI.destinationMarker = marker;
         _this.calculateRoute(marker);
       });
     },
@@ -201,7 +209,23 @@ export default {
       }
     },
     handleDoTripButton() {
-      console.log("Realizando el viaje!");
+      if (this.googleAPI.destinationMarker != null) {
+        this.$notify({
+          message: "¡Su viaje ha empezado!",
+          icon: "notification_important",
+          horizontalAlign: "center",
+          verticalAlign: "top",
+          type: "success"
+        });
+      } else {
+        this.$notify({
+          message: "Seleccione un lugar de llegada",
+          icon: "notification_important",
+          horizontalAlign: "center",
+          verticalAlign: "top",
+          type: "danger"
+        });
+      }
     },
     initMap(google) {
       let _this = this;

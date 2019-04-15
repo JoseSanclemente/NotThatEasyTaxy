@@ -12,11 +12,7 @@
         </div>
       </a>
 
-      <a
-        href="https://www.creative-tim.com/product/vue-material-dashboard"
-        target="_blank"
-        class="simple-text logo-normal"
-      >
+      <a target="_blank" class="simple-text logo-normal">
         {{ title }}
       </a>
     </div>
@@ -51,7 +47,7 @@ export default {
     },
     backgroundImage: {
       type: String,
-      default: require("@/assets/img/sidebar-2.jpg")
+      default: require("@/assets/img/taxi.jpeg")
     },
     imgLogo: {
       type: String,
@@ -59,7 +55,7 @@ export default {
     },
     activeColor: {
       type: String,
-      default: "green",
+      default: "orange",
       validator: value => {
         let acceptedValues = ["", "purple", "blue", "green", "orange", "red"];
         return acceptedValues.indexOf(value) !== -1;

@@ -64,8 +64,14 @@ export default {
             //TODO: Notify error in conection
           }
           if (res.statusCode != 200) {
+            this.$notify({
+              message: "Los datos ingresados no son válidos",
+              icon: "notification_important",
+              horizontalAlign: "center",
+              verticalAlign: "top",
+              type: "danger"
+            });
             return;
-            //TODO: Notidy error in login
           }
           this.$router.push("/" + this.type + "/map");
         });
@@ -74,9 +80,9 @@ export default {
   computed: {
     idLabel: function() {
       if (this.type == "driver") {
-        return "Cédula...";
+        return "C.C.";
       }
-      return "Número de telefono...";
+      return "Número de teléfono";
     }
   }
 };
@@ -88,8 +94,8 @@ export default {
   min-height: 100%;
   overflow: scroll;
 }
-::-webkit-scrollbar { 
-    display: none !important; 
+::-webkit-scrollbar {
+  display: none !important;
 }
 #login-button {
   align-content: center;

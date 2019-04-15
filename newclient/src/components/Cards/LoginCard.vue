@@ -16,7 +16,7 @@
 </template>
 
 <style lang="css">
-  #login {
-    justify-content: center;
-  }
+#login {
+  justify-content: center;
+}
 </style>

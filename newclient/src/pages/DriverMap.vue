@@ -2,15 +2,23 @@
   <div>
     <div id="floating-panel-buttons">
       <toggle-button
+        class="md-switch md-lg"
         :width="150"
         :height="52"
         :font-size="20"
         :value="false"
         @change="isActive = !isActive"
-        color="#1ad85f"
+        :css-colors="true"
         :sync="true"
         :labels="{ checked: 'Activo', unchecked: 'Inactivo' }"
       />
+      <md-button
+        title="Empezar Turno"
+        class="md-warning-icon"
+        @click="handleStartButton()"
+      >
+        <md-icon>check_circle_outline</md-icon>
+      </md-button>
     </div>
     <div id="map"></div>
   </div>
@@ -20,30 +28,11 @@
   position: absolute;
   width: 150px;
   height: 80px;
-  top: 150px;
+  top: 200px;
   left: 2%;
   z-index: 5;
   background-color: transparent;
   border: none;
-}
-
-#floating-panel-info {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  top: 500px;
-  left: 25%;
-  z-index: 5;
-  background-color: transparent;
-  border: none;
-}
-
-#information-card {
-  position: absolute;
-  width: 500px;
-  left: 25%;
-  z-index: 5;
-  background-color: transparent;
 }
 </style>
 
@@ -58,6 +47,25 @@ export default {
     };
   },
   methods: {
+    handleStartButton() {
+      if (this.startLocation != null) {
+        this.$notify({
+          message: "¡Su turno ha sido activo!",
+          icon: "notification_important",
+          horizontalAlign: "center",
+          verticalAlign: "top",
+          type: "success"
+        });
+      } else {
+        this.$notify({
+          message: "Activar su turno y seleccionar un punto de partida",
+          icon: "notification_important",
+          horizontalAlign: "center",
+          verticalAlign: "top",
+          type: "danger"
+        });
+      }
+    },
     initMap(google) {
       var userCoords;
       let _this = this;
@@ -105,7 +113,14 @@ export default {
               });
             }
           } else {
-            alert("Para empezar debe cambiarse a Activo");
+            _this.$notify({
+              message:
+                "Para seleccionar un punto de partida, debe activar su turno primero",
+              icon: "notification_important",
+              horizontalAlign: "center",
+              verticalAlign: "top",
+              type: "danger"
+            });
           }
         });
       });

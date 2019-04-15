@@ -6,7 +6,7 @@
       >
         <md-card>
           <md-card-header data-background-color="orange">
-            <h5 class="title">Viajes</h5>
+            <h5 class="title">Viajes Realizados</h5>
           </md-card-header>
           <md-card-content>
             <simple-table table-header-color="orange"></simple-table>
